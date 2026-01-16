@@ -1,0 +1,2 @@
+model,min_precision_target,chosen_threshold
+Balanced,0.5,1.0
