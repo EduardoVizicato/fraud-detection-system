@@ -1,11 +1,12 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
+from pathlib import Path
 import os
 import pandas as pd
 import numpy as np
 import streamlit as stream
-from.paths import Paths
+from .paths import Paths
 
 @dataclass
 class Artifacts:
@@ -31,8 +32,8 @@ def load_md(path: str) -> str:
         return f.read()
 
 def normalize_df(df: pd.DataFrame) -> pd.DataFrame:
-    if "Unnmade: 0" in df.columns and "class" not in df.columns:
-        df = df.rename(columns={"Unnmed: 0": "class"})
+    if "Unnamed: 0" in df.columns and "class" not in df.columns:
+        df = df.rename(columns={"Unnamed: 0": "class"})
     df.columns = df.columns.str.replace("-", "_")
     return df
 
@@ -45,24 +46,34 @@ def load_csv(path: str) -> Optional[pd.DataFrame]:
 def load_npz(path: str):
     if not os.path.exists(path):
         return None
-    return np.load(path)
+
+    npz_obj = np.load(path)
+    data = {k: npz_obj[k] for k in npz_obj.files}
+    npz_obj.close()
+    return data
 
 @stream.cache_data(show_spinner=False)
 def load_artifacts() -> Artifacts:
+    stream.sidebar.write("CWD:", os.getcwd())
+    stream.sidebar.write("loaders.py:", str(Path(__file__).resolve()))
     p = Paths()
+    stream.sidebar.write("comparison_csv:", p.comparison_csv, os.path.exists(p.comparison_csv))
+    stream.sidebar.write("kpis_csv:", p.kpis_csv, os.path.exists(p.kpis_csv))
+    stream.sidebar.write("alerts_csv:", p.alerts_csv, os.path.exists(p.alerts_csv))
+    stream.sidebar.write("final_md:", p.final_md, os.path.exists(p.final_md))
     return Artifacts(
-        comparison_df= load_csv(p.comparison_csv),
-        kpis_df= load_csv(p.kpis_csv),
-        alerts_df= load_csv(p.alerts_csv),
-        ai_md= load_md(p.ai_md),
-        audit_md= load_md(p.audit_md),
-        final_md= load_md(p.final_md),
-        baseline_npz= load_npz(p.baseline_npz),
-        balanced_npz= load_npz(p.balanced_npz),
-        baseline_df= load_csv(p.baseline_csv),
-        balanced_df= load_csv(p.balanced_csv),
-        fraud_cases_df= load_csv(p.fraud_cases_csv),
-        final_summary_df= load_csv(p.final_summary_csv),
-        threshold_summary_df= load_csv(p.threshold_summary_csv),
-        feature_importance_logreg_df= load_csv(p.feature_importance_logred_csv)
+        comparison_df=load_csv(p.comparison_csv),
+        kpis_df=load_csv(p.kpis_csv),
+        alerts_df=load_csv(p.alerts_csv),
+        ai_md=load_md(p.ai_md),
+        audit_md=load_md(p.audit_md),
+        final_md=load_md(p.final_md),
+        baseline_npz=load_npz(p.baseline_npz),
+        balanced_npz=load_npz(p.balanced_npz),
+        baseline_df=load_csv(p.baseline_csv),
+        balanced_df=load_csv(p.balanced_csv),
+        fraud_cases_df=load_csv(p.fraud_cases_csv),
+        final_summary_df=load_csv(p.final_summary_csv),
+        threshold_summary_df=load_csv(p.threshold_summary_csv),
+        feature_importance_logreg_df=load_csv(p.feature_importance_logreg_csv),
     )
