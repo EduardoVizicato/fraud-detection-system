@@ -7,3 +7,4 @@ langchain
 python-dotenv
 streamlit
 plotly
+langchain-google-genai

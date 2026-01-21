@@ -1,7 +1,12 @@
 import os
 from typing import Optional
+from dotenv import load_dotenv, find_dotenv
 from streamlit_app.data_layer.loaders import Artifacts
 from streamlit_app.chat.context import build_context
+
+env_file = find_dotenv()
+loaded = load_dotenv(env_file, override=True, encoding='utf-8-sig')
+key = os.getenv("GOOGLE_API_KEY")
 
 def _extract_text(content) -> str:
     if isinstance(content, str):
@@ -15,7 +20,6 @@ def _extract_text(content) -> str:
     return str(content)
 
 def answer_with_gemini(question: str, artifacts: Artifacts) -> Optional[str]:
-    key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
     if not key:
         return None
 
@@ -24,22 +28,22 @@ def answer_with_gemini(question: str, artifacts: Artifacts) -> Optional[str]:
     except Exception:
         return None
 
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=0)
 
     context = build_context(artifacts)
     prompt = f"""
-Você é um assistente técnico do projeto de detecção de fraudes.
-Responda em português, em tópicos curtos, usando apenas o contexto.
+You are a technique assistant of the fraud detection project.
+Answer in the same language that the user is asking , using the context it can be short or long answers.
 
-CONTEXTO:
+CONTEXT:
 {context}
 
-PERGUNTA:
+QUESTION:
 {question}
 
-REGRAS:
-- Se recomendar um modelo, explique trade-off (precision vs recall).
-- Se faltar dado, diga o que falta.
+RULES:
+- If the user recommends a model, explain the trade-off (precision vs recall).
+- if you see that something is missing, say it.
 """
     resp = llm.invoke(prompt)
     return _extract_text(getattr(resp, "content", ""))

@@ -7,11 +7,10 @@ from streamlit_app.ui.components import render_reports
 def render_header():
     left, right = stream.columns([0.75, 0.25])
     with left:
-        stream.title("Fraud Detection • Dashboard")
+        stream.title("Fraud Detection")
         stream.markdown('<div class="small-muted"> Baseline vs Balanced • Audit • Threshold • Chatbot </div>', unsafe_allow_html=True)
     with right:
         stream.write("")
-        stream.write("**Status**: ✅Online")
 
     stream.divider()
 
@@ -21,7 +20,6 @@ def render_tabs(artifacts: Artifacts):
     with tab_dash:
         render_model_section(artifacts)
         stream.divider()
-        render_model_section(artifacts)
     
     with tab_chat:
         render_chat(artifacts)
