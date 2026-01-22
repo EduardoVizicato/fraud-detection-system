@@ -5,7 +5,7 @@ matplotlib
 jupyter
 langchain
 python-dotenv
-streamlit
 plotly
 langchain-google-genai
-streamlit-option-menu
+fastapi
+uvicorn[standard]
