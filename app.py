@@ -1,11 +1,9 @@
-import streamlit as stream
-from streamlit_app.ui.layout import render_app
+import streamlit as st
 from streamlit_app.ui.styles import inject_css
+from streamlit_app.ui.layout import render_app
 from streamlit_app.data_layer.loaders import load_artifacts
 
-stream.set_page_config(page_title="Fraud Detection System", page_icon="🛰️", layout="wide")
-
+st.set_page_config(page_title="Fraud Monitor", page_icon="🛰️", layout="wide")
 inject_css()
 
-artifacts = load_artifacts()
-render_app(artifacts)
+render_app(load_artifacts)
