@@ -6,9 +6,7 @@ load_dotenv()
 
 DATA_ROOT = Path(os.getenv("DATA_ROOT", "./data")).resolve()
 
-# Extensões permitidas para leitura/download via API
 ALLOWED_EXTS = {".csv", ".npz", ".md", ".json", ".txt", ".png", ".jpg", ".jpeg", ".webp"}
 
-# Limites pra não travar frontend
 MAX_CSV_ROWS = int(os.getenv("MAX_CSV_ROWS", "5000"))
 MAX_NPZ_PREVIEW_ELEMENTS = int(os.getenv("MAX_NPZ_PREVIEW_ELEMENTS", "20000"))

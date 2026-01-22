@@ -7,5 +7,4 @@ def reply(message: str) -> str:
     if not msg:
         return "Manda uma pergunta pra eu conseguir responder 😉"
 
-    # TODO: substitua por sua IA real
     return f"[IA] Entendi sua pergunta: {msg}"
