@@ -9,3 +9,6 @@ plotly
 langchain-google-genai
 fastapi
 uvicorn[standard]
+azure-ai-projects 
+azure-identity
+azure-ai-agents
