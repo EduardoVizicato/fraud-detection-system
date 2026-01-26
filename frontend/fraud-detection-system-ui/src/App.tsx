@@ -1,8 +1,8 @@
 import './App.css'
-import Chat from './pages/Chat';
+import Landing from './pages/landingPage/LandingPage';
 
 function App() {
-  return <Chat />;
+  return <Landing />
 }
 
 export default App
