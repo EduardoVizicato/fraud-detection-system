@@ -1,2 +1,0 @@
-total_cases,predicted_fraud,true_fraud,tp,fp,fn,tn,precision,recall
-71202,91,123,76,47,15,71064,0.6178861788617886,0.8351648351648352
