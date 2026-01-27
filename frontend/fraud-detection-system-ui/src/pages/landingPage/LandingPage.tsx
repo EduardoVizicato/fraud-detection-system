@@ -3,36 +3,13 @@ import "./landing.css";
 export default function Landing() {
   return (
     <div className="lp">
-      <header className="lp-header">
-        <div className="lp-container lp-nav">
-          <a className="lp-brand" href="#top" aria-label="Fraud Detection System">
-            <span className="lp-logo" aria-hidden />
-            <span className="lp-brandText">
-              <span className="lp-brandName">FraudShield</span>
-              <span className="lp-brandTag">Heimdall • Fraud Detection</span>
-            </span>
-          </a>
-
-          <nav className="lp-links" aria-label="Primary">
-            <a href="#product">Heimdall</a>
-            <a href="#capabilities">Dashboard</a>
-            <a href="#how">O que fazemos?</a>
-          </nav>
-
-          <div className="lp-actions">
-            <a className="lp-btn lp-btnPrimary" href="#cta">Abrir chat</a>
-          </div>
-        </div>
-      </header>
-
       <main id="top">
-        {/* HERO */}
         <section className="lp-hero">
           <div className="lp-container lp-heroGrid">
             <div className="lp-heroCopy">
               <div className="lp-pill">
                 <span className="lp-dot lp-dotOk" />
-                Defesa ativa contra fraude • Tempo real
+                Defesa ativa contra fraude
               </div>
 
               <h1 className="lp-h1">
@@ -140,8 +117,6 @@ export default function Landing() {
               </div>
 
               <div className="lp-miniNote">
-                <span className="lp-miniDot" />
-                UI feita para leitura rápida: azul = confiança, vermelho = risco imediato.
               </div>
             </div>
           </div>
