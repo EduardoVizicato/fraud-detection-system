@@ -9,10 +9,11 @@ import RequireAuth from "./pages/auth/validation/requireAuth";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import MarketingLayout from "./pages/routes/MarketingLayout";
-import OverviewHeimdall from "./pages/overview/OverviewHeimdall";
-import OverviewDashboard from "./pages/overview/OverviewDashboard";
+import OverviewHeimdall from "./pages/overview/heimdall/OverviewHeimdall";
+import OverviewDashboard from "./pages/overview/dashboard/OverviewDashboard";
 import AppLayout from "./pages/routes/AppLayout";
-import OverviewWhat from "./pages/overview/OverviewWhat";
+import OverviewWhatWeDo from "./pages/overview/aboutUs/OverviewWhatWeDo";
+
 
 const RootLayout = () => <Outlet />;
 
@@ -26,7 +27,7 @@ ReactDOM.createRoot(root).render(
           <Route path="/" element={<Landing />} />
           <Route path="/overview/heimdall" element={<OverviewHeimdall />} />
           <Route path="/overview/dashboard" element={<OverviewDashboard />} />
-          <Route path="/overview/o-que-fazemos" element={<OverviewWhat />} />
+          <Route path="/overview/o-que-fazemos" element={<OverviewWhatWeDo />} />
         </Route>
 
         <Route path="/login" element={<Login />} />
