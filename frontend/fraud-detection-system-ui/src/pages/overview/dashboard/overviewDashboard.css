@@ -1,0 +1,120 @@
+/* Reusa a base do overview.css (.ov, .ov-card, etc.) e só adiciona o “mini dashboard real” */
+
+.od-hero{ align-items: start; }
+
+.od-preview{
+  margin-top: 12px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(0,0,0,.22);
+}
+
+.od-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.08);
+}
+.od-dots{ display:flex; gap:6px; }
+.od-dots span{
+  width: 9px; height: 9px; border-radius:999px;
+  background: rgba(255,255,255,.18);
+}
+.od-title{
+  font-size: 13px;
+  color: rgba(255,255,255,.72);
+  font-weight: 900;
+}
+
+.od-body{ padding: 14px; }
+
+.od-kpiGrid{
+  display:grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.od-kpiGrid.cols4{ grid-template-columns: repeat(4, 1fr); }
+.od-kpiGrid.cols5{ grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 980px){
+  .od-kpiGrid.cols4, .od-kpiGrid.cols5{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px){
+  .od-kpiGrid.cols4, .od-kpiGrid.cols5{ grid-template-columns: 1fr; }
+}
+
+.od-kpiCard{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.10);
+  padding: 12px;
+}
+
+.od-kpiLabel{
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255,255,255,.68);
+}
+
+.od-kpiValue{
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 950;
+  letter-spacing: -0.3px;
+  color: rgba(255,255,255,.92);
+}
+.od-kpiValue.tone-info{ color: rgba(0,116,217,.95); }
+.od-kpiValue.tone-warn{ color: rgba(255,133,27,.95); }
+.od-kpiValue.tone-risk{ color: rgba(255,65,54,.95); }
+.od-kpiValue.tone-safe{ color: rgba(46,204,64,.95); }
+
+.od-kpiChip{
+  margin-top: 10px;
+  display:inline-flex;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .35px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.84);
+}
+.od-kpiChip.tone-info{ border-color: rgba(0,116,217,.45); }
+.od-kpiChip.tone-warn{ border-color: rgba(255,133,27,.45); }
+.od-kpiChip.tone-risk{ border-color: rgba(255,65,54,.45); }
+.od-kpiChip.tone-safe{ border-color: rgba(46,204,64,.45); }
+
+.od-chartCard{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.10);
+  padding: 12px;
+}
+
+.od-chartHead{
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.od-chartName{ font-weight: 950; color: rgba(255,255,255,.92); }
+.od-chartHint{ font-size: 12px; color: rgba(255,255,255,.62); }
+
+.od-chart{
+  height: 320px;
+  background: rgba(255,255,255,.96);
+  border-radius: 14px;
+  border: 1px solid rgba(11,18,32,.10);
+  overflow: hidden;
+}
+
+.od-note{
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,.62);
+}

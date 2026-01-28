@@ -6,15 +6,11 @@ import Landing from './pages/landingPage/LandingPage';
 
 function App() {
   return (
-     <BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/heimdall" element={<Chat />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
-export default App()
+export default App;

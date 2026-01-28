@@ -75,6 +75,7 @@
     linear-gradient(135deg, rgba(0,116,217,.95), rgba(0,31,63,1));
   border: 1px solid rgba(255,255,255,.18);
   box-shadow: 0 10px 30px rgba(0,116,217,.18);
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
 }
 .lp-brandText{ display:flex; flex-direction:column; line-height:1.05; }
 .lp-brandName{ font-weight: 800; letter-spacing: .2px; }
@@ -446,6 +447,7 @@
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(255,255,255,.04);
   margin-bottom: 12px;
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
 }
 .lp-icon-info{ box-shadow: 0 18px 40px rgba(0,116,217,.14); border-color: rgba(0,116,217,.30); }
 .lp-icon-warn{ box-shadow: 0 18px 40px rgba(255,133,27,.12); border-color: rgba(255,133,27,.28); }
