@@ -213,6 +213,7 @@
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.03);
   margin-bottom: 12px;
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
 }
 .ov-icIcon.tone-info{ box-shadow: 0 18px 40px rgba(0,116,217,.14); border-color: rgba(0,116,217,.35); }
 .ov-icIcon.tone-warn{ box-shadow: 0 18px 40px rgba(255,133,27,.12); border-color: rgba(255,133,27,.32); }

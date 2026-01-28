@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router";
 import "./App.css";
 import Landing from "./pages/landingPage/LandingPage";
 import Dashboard from "./pages/dashBoard/Dashboard";
-import Chat from "./pages/chatBot/Chat";
 import RequireAuth from "./pages/auth/validation/requireAuth";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
@@ -13,6 +12,7 @@ import OverviewHeimdall from "./pages/overview/heimdall/OverviewHeimdall";
 import OverviewDashboard from "./pages/overview/dashboard/OverviewDashboard";
 import AppLayout from "./pages/routes/AppLayout";
 import OverviewWhatWeDo from "./pages/overview/aboutUs/OverviewWhatWeDo";
+import Chat from "./pages/chatBot/Chat";
 
 
 const RootLayout = () => <Outlet />;
@@ -21,7 +21,7 @@ const root = document.getElementById("root")!;
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <BrowserRouter>
+        <BrowserRouter>
       <Routes>
         <Route element={<MarketingLayout />}>
           <Route path="/" element={<Landing />} />
@@ -35,8 +35,8 @@ ReactDOM.createRoot(root).render(
 
         <Route element={<RequireAuth />}>
           <Route path="/app" element={<AppLayout />}>
+            <Route index element={<Navigate to="/app/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="heimdall" element={<Chat />} />
           </Route>
         </Route>
 

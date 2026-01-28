@@ -1,4 +1,4 @@
-import { Outlet, NavLink, useNavigate } from "react-router";
+import { Outlet, NavLink, useNavigate, Link } from "react-router";
 import { getUserName, logOut } from "../auth/validation/auth";
 
 export default function AppLayout() {
@@ -14,20 +14,18 @@ export default function AppLayout() {
     <div>
       <header className="topbar">
         <div className="container topbar-inner">
-          <div className="brand">
-            <div className="brand-mark" />
-            <div>
-              <div className="brand-title">FraudShield</div>
-              <div className="brand-sub">Logado como {name}</div>
-            </div>
-          </div>
+            <Link className="lp-brand" to="/app/dashboard" aria-label="FraudShield Home">
+                <span className="lp-logo" aria-hidden />
+                <span className="lp-brandText">
+                    <span className="lp-brandName">FraudShield</span>
+                    <span className="lp-brandTag">Heimdall • Fraud Detection</span>
+                </span>
+            </Link>
 
           <nav className="lp-links" aria-label="App">
-            <NavLink to="/app/heimdall">Heimdall</NavLink>
-            <NavLink to="/app/dashboard">Dashboard</NavLink>
           </nav>
 
-          <button className="btn btn-ghost" onClick={onLogout}>Sair</button>
+          <button className="lp-btn lp-btnGhost" onClick={onLogout}>Sair</button>
         </div>
       </header>
 

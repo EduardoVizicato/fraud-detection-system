@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsiveLine } from "@nivo/line";
+import Chat from "../chatBot/Chat";
 
 const API_BASE = "http://localhost:8000";
 
@@ -31,7 +32,7 @@ const nivoTheme = {
   tooltip: { container: { fontSize: 12 } },
 };
 
-export default function DashboardNivo() {
+export default function Dashboard() {
   const [files, setFiles] = useState<string[]>([]);
   const [selected, setSelected] = useState<string>("processed/audit_kpis.csv");
   const [csv, setCsv] = useState<CsvResponse | null>(null);
@@ -110,30 +111,87 @@ export default function DashboardNivo() {
     }];
   }, [csv, isKpiLike]);
 
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const context = useMemo(() => {
+    const base: any ={
+      page: "dashboard",
+      selectedFile: selected,
+      csvColumns: csv?.columns ?? [],
+      rowsPreview: (csv?.rows ?? []).slice(0,5),
+    };
+
+    if(isKpiLike && kpi){
+      base.view = "kpi_overview";
+      base.chart = { id: "confusion_matrix", title: "Confusion Matrix (TP/FP/FN/TN)"};
+
+      base.kpis = {
+        total_cases: num(kpi.tota_cases ?? kpi["total_cases"]),
+        predicted_fraud: num(kpi.predicted_fraud ?? kpi["predicted_fraud"]),
+        true_fraud: num(kpi.true_fraud ?? kpi["true_fraud"]),
+        tp: num(kpi.tp),
+        fp: num(kpi.fp),
+        fn: num(kpi.fn),
+        tn: num(kpi.tn),
+        precision: num(kpi.precision),
+        recall: num(kpi.recall),
+      };
+
+      base.confusionBar = confusionBar;
+      base.kpiCards = kpiCards.map((c) => ({...c, value: num(c.value) ?? c.value}));
+    } else {
+      base.view = "series";
+      base.chart = {id: "series_auto", title: "Serie (auto)"};
+      base.series = lineData ? lineData[0]: null;
+    }
+
+    return base
+
+  }, [selected, csv, isKpiLike, kpi, confusionBar, kpiCards, lineData]);
+
   return (
     <div>
-      <div className="topbar">
-        <div className="container topbar-inner">
-          <div className="brand">
-            <div className="brand-mark" />
+      <div className="container section">
+        <div className="dash-head">
+          <div>
+            <div className="dash-title">Dashboard</div>
+            <div className="dash-sub">KPIs e gráficos com hierarquia visual forte.</div>
+          </div>
+
+          <div className="dash-toolbar">
+            <div className="dash-field">
+              <div className="dash-label">CSV</div>
+              <select className="dash-select" value={selected} onChange={(e) => setSelected(e.target.value)}>
+                {files.map((f) => <option key={f} value={f}>{f}</option>)}
+              </select>
+            </div>
+
             <div>
-              <div className="brand-title">FraudShield Dashboard</div>
-              <div className="brand-sub"></div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <button
+                  onClick={() => setDrawerOpen((v) => !v)}
+                  style={{
+                    padding: "10px 12px",
+                    borderRadius: 14,
+                    border: "1px solid rgba(0,116,217,.55)",
+                    background: "linear-gradient(135deg, #0074d9, rgba(0,116,217,.75))",
+                    color: "white",
+                    fontWeight: 900,
+                    cursor: "pointer",
+                  }}
+                >
+                  Heimdall
+                </button>
+              </div>
+
+              <Chat
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                context={context}
+              />
             </div>
           </div>
-
-          <div className="pill">
-            CSV:{" "}
-            <select className="select" value={selected} onChange={(e) => setSelected(e.target.value)}>
-              {files.map((f) => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
         </div>
-      </div>
-
-      <div className="container section">
-        <div className="h1">Visão Geral</div>
-        <p className="p">KPIs e gráficos com hierarquia visual forte. Saturado só para risco/alerta.</p>
 
         {loading && <div style={{ marginTop: 12 }} className="p">Carregando…</div>}
 
