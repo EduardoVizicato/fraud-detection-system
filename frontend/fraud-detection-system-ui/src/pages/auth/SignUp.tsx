@@ -18,7 +18,7 @@ export default function SignUp() {
     try {
       if (password.length < 4) throw new Error("Senha muito curta (mínimo 4).");
       signUp({ name: name.trim(), email: email.trim(), password });
-      nav("/dashboard");
+      nav("/login");
     } catch (e: any) {
       setErr(e?.message ?? "Erro ao cadastrar.");
     } finally {

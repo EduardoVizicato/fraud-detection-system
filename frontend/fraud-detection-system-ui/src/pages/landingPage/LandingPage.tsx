@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./landing.css";
 
 export default function Landing() {
@@ -9,36 +10,36 @@ export default function Landing() {
             <div className="lp-heroCopy">
               <div className="lp-pill">
                 <span className="lp-dot lp-dotOk" />
-                Defesa ativa contra fraude
+                Active defense system
               </div>
 
               <h1 className="lp-h1">
-                Detecte, explique e reaja.
-                <span className="lp-h1Accent"> Em segundos.</span>
+                Detect, explain, and react.
+                <span className="lp-h1Accent"> In seconds.</span>
               </h1>
 
               <p className="lp-subtitle">
-                Um painel moderno para métricas e gráficos + um copiloto (Heimdall) para investigar casos,
-                reduzir falsos positivos e transformar dados em decisão.
+                A command center for metrics and charts + an AI copilot (Heimdall) to investigate anomalies,
+                eliminate false positives, and turn complex data into decisive action.
               </p>
 
               <div className="lp-heroBtns">
-                <a className="lp-btn lp-btnPrimary" href="#cta">Começar agora</a>
-                <a className="lp-btn lp-btnGhost" href="#capabilities">Ver capacidades</a>
+                <a className="lp-btn lp-btnPrimary" href="#cta">Get Started</a>
+                <a className="lp-btn lp-btnGhost" href="#capabilities">View Capabilities</a>
               </div>
 
               <div className="lp-micro">
                 <div className="lp-microItem">
                   <span className="lp-badge lp-badgeSafe">#2ecc40</span>
-                  <span>Seguro / aprovado</span>
+                  <span>Safe / Approved</span>
                 </div>
                 <div className="lp-microItem">
                   <span className="lp-badge lp-badgeWarn">#ff851b</span>
-                  <span>Alertas / triagem</span>
+                  <span>Warning / Triage</span>
                 </div>
                 <div className="lp-microItem">
                   <span className="lp-badge lp-badgeRisk">#ff4136</span>
-                  <span>Fraude / alto risco</span>
+                  <span>Fraud / High Risk</span>
                 </div>
               </div>
             </div>
@@ -58,18 +59,18 @@ export default function Landing() {
                 <div className="lp-mockBody">
                   <div className="lp-kpis">
                     <div className="lp-kpi">
-                      <div className="lp-kpiLabel">Risco alto</div>
+                      <div className="lp-kpiLabel">High Risk</div>
                       <div className="lp-kpiValue">
                         17 <span className="lp-kpiUnit">cases</span>
                       </div>
-                      <div className="lp-kpiChip lp-chipRisk">ALERTA</div>
+                      <div className="lp-kpiChip lp-chipRisk">ALERT</div>
                     </div>
                     <div className="lp-kpi">
-                      <div className="lp-kpiLabel">Precisão</div>
+                      <div className="lp-kpiLabel">Precision</div>
                       <div className="lp-kpiValue">
                         0.93 <span className="lp-kpiUnit">score</span>
                       </div>
-                      <div className="lp-kpiChip lp-chipInfo">MODELO</div>
+                      <div className="lp-kpiChip lp-chipInfo">MODEL</div>
                     </div>
                     <div className="lp-kpi">
                       <div className="lp-kpiLabel">Recall</div>
@@ -82,8 +83,8 @@ export default function Landing() {
 
                   <div className="lp-sparkWrap">
                     <div className="lp-sparkHeader">
-                      <div className="lp-sparkTitle">Sinais • Últimas 24h</div>
-                      <div className="lp-sparkHint">anomalias / alertas / aprovações</div>
+                      <div className="lp-sparkTitle">Signals • Charts</div>
+                      <div className="lp-sparkHint">anomalies / alerts / approvals</div>
                     </div>
                     <div className="lp-spark">
                       <div className="lp-bar lp-bar1" />
@@ -103,14 +104,14 @@ export default function Landing() {
                   <div className="lp-chatPreview">
                     <div className="lp-chatTop">
                       <div className="lp-chatTitle">Heimdall</div>
-                      <div className="lp-chatChip">Investigação</div>
+                      <div className="lp-chatChip">Investigation</div>
                     </div>
                     <div className="lp-bubble lp-bubbleUser">
-                      “Por que esse pagamento foi marcado como alto risco?”
+                      “Why is this transaction flagged as high risk?”
                     </div>
                     <div className="lp-bubble lp-bubbleBot">
-                      “Sinal forte: padrão de IP incomum + divergência de device fingerprint. Sugiro revisar
-                      histórico e aplicar verificação adicional.”
+                      “Critical Signal: IP mismatch + device fingerprint velocity. Recommend manual review
+                      of historical chargebacks before approval.”
                     </div>
                   </div>
                 </div>
@@ -126,28 +127,28 @@ export default function Landing() {
         <section id="product" className="lp-section">
           <div className="lp-container">
             <div className="lp-sectionHead">
-              <h2 className="lp-h2">Uma visão clara do risco</h2>
+              <h2 className="lp-h2">Uncompromising Clarity</h2>
               <p className="lp-p">
-                Gráficos e relatórios que priorizam contraste, hierarquia visual e velocidade de leitura —
-                para tomar decisão sem “caçar informação”.
+                Interfaces designed for cognitive ergonomics. Contrast, hierarchy, and speed—so you can
+                make decisions without hunting for data.
               </p>
             </div>
 
             <div className="lp-grid3">
               <FeatureCard
                 tone="info"
-                title="Dashboard analítico"
-                desc="KPIs, curvas, alertas e comparativos com layout limpo e foco em ação."
+                title="Analytical Dashboard"
+                desc="KPIs, curves, and real-time alerts with a clean layout focused on action."
               />
               <FeatureCard
                 tone="warn"
-                title="Triagem inteligente"
-                desc="Destaque de casos por nível de risco (alto/médio/atenção) com filtros rápidos."
+                title="Smart Triage"
+                desc="Automatic case prioritization (High/Medium/Watch) with instant filters."
               />
               <FeatureCard
                 tone="safe"
-                title="Evidência e explicação"
-                desc="Heimdall resume sinais principais e sugere próximos passos para investigação."
+                title="Evidence & Explanation"
+                desc="Heimdall summarizes key signals and prescribes the next investigation steps."
               />
             </div>
           </div>
@@ -158,43 +159,42 @@ export default function Landing() {
           <div className="lp-container">
             <div className="lp-split">
               <div>
-                <h2 className="lp-h2">Feito para apresentação e produção</h2>
+                <h2 className="lp-h2">Engineered to eliminate error fatigue</h2>
                 <p className="lp-p">
-                  A landing é só a porta de entrada. Depois, o app vira um console completo: chat com UX
-                  decente, gráficos consistentes e reports bonitos.
+                  Discover the technology protecting financial institutions worldwide by reducing noise and increasing focus.
                 </p>
 
                 <ul className="lp-list">
                   <li>
-                    <span className="lp-bullet lp-bulletInfo" /> Layout moderno, espaçamento generoso, tipografia forte
+                    <span className="lp-bullet lp-bulletInfo" /> High-contrast layout, generous spacing, legible typography
                   </li>
                   <li>
-                    <span className="lp-bullet lp-bulletRisk" /> Alertas visíveis sem poluir o painel
+                    <span className="lp-bullet lp-bulletRisk" /> Critical alerts visible without cluttering the view
                   </li>
                   <li>
-                    <span className="lp-bullet lp-bulletSafe" /> Foco em confiabilidade e leitura rápida
+                    <span className="lp-bullet lp-bulletSafe" /> Built for reliability and rapid data ingestion
                   </li>
                 </ul>
               </div>
 
               <div className="lp-callout">
-                <div className="lp-calloutTitle">Design rules (seu briefing)</div>
+                <div className="lp-calloutTitle">Cognitive Ergonomics</div>
                 <div className="lp-calloutBody">
                   <div className="lp-rule">
                     <span className="lp-swatch" style={{ background: "#001f3f" }} />
-                    Azul navy como base (confiança/defesa).
+                    Navy base for trust and eye comfort.
                   </div>
                   <div className="lp-rule">
                     <span className="lp-swatch" style={{ background: "#ff4136" }} />
-                    Vermelho só para risco/fraude real.
+                    Red reserved exclusively for confirmed risk.
                   </div>
                   <div className="lp-rule">
                     <span className="lp-swatch" style={{ background: "#0074d9" }} />
-                    Azul claro para interação e info.
+                    Blue for actionable intelligence.
                   </div>
                   <div className="lp-rule">
                     <span className="lp-swatch" style={{ background: "#2ecc40" }} />
-                    Verde para “safe / sucesso”.
+                    Green for verified safety.
                   </div>
                 </div>
               </div>
@@ -206,32 +206,32 @@ export default function Landing() {
         <section id="signals" className="lp-section">
           <div className="lp-container">
             <div className="lp-sectionHead">
-              <h2 className="lp-h2">Sinais que importam</h2>
+              <h2 className="lp-h2">Signals that matter</h2>
               <p className="lp-p">
-                Use cores saturadas apenas quando for urgente. O resto fica calmo e legível.
+                Comprehensive telemetry to secure every transaction
               </p>
             </div>
 
             <div className="lp-grid2">
               <SignalCard
                 color="risk"
-                title="Fraude detectada"
-                desc="Transações fora do padrão, inconsistências críticas, alta probabilidade."
+                title="Confirmed Fraud"
+                desc="Pattern anomalies, critical inconsistencies, high probability scores."
               />
               <SignalCard
                 color="warn"
-                title="Atenção / revisão"
-                desc="Sinais moderados: discrepâncias pequenas, padrões emergentes."
+                title="Review Required"
+                desc="Moderate signals: slight discrepancies or emerging behavioral shifts."
               />
               <SignalCard
                 color="info"
-                title="Informação"
-                desc="Contexto do comportamento: volume, tendência, períodos e variações."
+                title="Contextual Data"
+                desc="Behavioral context: velocity, trends, periods, and deviations."
               />
               <SignalCard
                 color="safe"
-                title="Seguro"
-                desc="Transações consistentes com histórico e sinais limpos."
+                title="Verified Safe"
+                desc="Transactions consistent with historical patterns and clean signals."
               />
             </div>
           </div>
@@ -241,15 +241,15 @@ export default function Landing() {
         <section id="how" className="lp-section lp-sectionAlt">
           <div className="lp-container">
             <div className="lp-sectionHead">
-              <h2 className="lp-h2">Como você vai usar</h2>
-              <p className="lp-p">Fluxo simples para demo: pergunta → evidência → decisão → ação.</p>
+              <h2 className="lp-h2">Operational Workflow</h2>
+              <p className="lp-p">A streamlined path from detection to resolution: Query → Evidence → Decision.</p>
             </div>
 
             <div className="lp-steps">
-              <Step n="01" title="Abra o painel" desc="KPIs + tendências + alertas, tudo com contraste alto." />
-              <Step n="02" title="Pergunte ao Heimdall" desc="Explique o caso e peça sugestões de investigação." />
-              <Step n="03" title="Valide com dados" desc="Compare métricas e revise sinais com filtros rápidos." />
-              <Step n="04" title="Aja" desc="Marque, reporte e acompanhe o que mudou no comportamento." />
+              <Step n="01" title="Monitor" desc="Dashboard highlights KPIs, trends, and alerts with high contrast." />
+              <Step n="02" title="Investigate" desc="Ask Heimdall for root-cause analysis and investigation paths." />
+              <Step n="03" title="Validate" desc="Compare metrics and review specific signals using quick filters." />
+              <Step n="04" title="Resolve" desc="Tag, report, and feed the decision back into the model." />
             </div>
           </div>
         </section>
@@ -258,22 +258,22 @@ export default function Landing() {
         <section id="cta" className="lp-cta">
           <div className="lp-container lp-ctaBox">
             <div>
-              <h3 className="lp-h3">Venha conhecer o futuro da detecção de fraudes</h3>
+              <h3 className="lp-h3">Experience the future of fraud detection</h3>
               <p className="lp-p">
-                Conheça o seu ultimo agente de detecção de fraudes!
+                Deploy your ultimate defense agent today.
               </p>
             </div>
             <div className="lp-ctaBtns">
-              <a className="lp-btn lp-btnPrimary" href="#">Abrir chat</a>
-              <a className="lp-btn lp-btnGhost" href="#top">Voltar ao topo</a>
+              <Link className="lp-btn lp-btnGhost" to="/login">Log in</Link>
+              <Link className="lp-btn lp-btnPrimary" to="/signUp">Sign up</Link>
             </div>
           </div>
         </section>
 
         <footer className="lp-footer">
           <div className="lp-container lp-footerInner">
-            <span>© {new Date().getFullYear()} FraudShield • Heimdall</span>
-            <span className="lp-footerRight">Made for demo • Eduardo Vizicato</span>
+            <span>© {new Date().getFullYear()} FraudShield • Heimdall AI</span>
+            <span className="lp-footerRight">Enterprise Edition • FraudShield Technologies</span>
           </div>
         </footer>
       </main>

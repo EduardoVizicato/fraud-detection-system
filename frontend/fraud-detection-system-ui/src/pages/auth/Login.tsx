@@ -16,7 +16,7 @@ export default function Login() {
     setLoading(true);
     try {
       login(email.trim(), password);
-      nav("/dashboard");
+      nav("/app/dashboard");
     } catch (e: any) {
       setErr(e?.message ?? "Erro ao entrar.");
     } finally {

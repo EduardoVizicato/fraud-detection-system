@@ -37,18 +37,18 @@ export default function OverviewDashboard() {
   const scenarios: Scenario[] = useMemo(
     () => [
       {
-        title: "Visão Geral (KPIs)",
-        subtitle: "Métricas principais + leitura rápida por cor",
+        title: "Overview (KPIs)",
+        subtitle: "Key metrics + quick reading by color",
         tags: [
           { label: "KPIs", tone: "info" },
-          { label: "Triagem", tone: "warn" },
+          { label: "Triage", tone: "warn" },
         ],
         kpis: [
-          { label: "Total", value: "71.202", tone: "info" },
-          { label: "Pred. Fraude", value: "91", tone: "warn" },
-          { label: "Fraude real", value: "123", tone: "risk" },
-          { label: "Precision", value: "0,6179", tone: "info" },
-          { label: "Recall", value: "0,8352", tone: "safe" },
+          { label: "Total", value: "71,202", tone: "info" },
+          { label: "Fraud Pred.", value: "91", tone: "warn" },
+          { label: "Actual fraud", value: "123", tone: "risk" },
+          { label: "Precision", value: "0.6179", tone: "info" },
+          { label: "Recall", value: "0.8352", tone: "safe" },
         ],
         kind: "bar",
         bar: {
@@ -64,17 +64,17 @@ export default function OverviewDashboard() {
         },
       },
       {
-        title: "Comparação de Modelos",
-        subtitle: "Baseline vs Balanced • precisão e recall",
+        title: "Model Comparison",
+        subtitle: "Baseline vs Balanced • precision and recall",
         tags: [
-          { label: "Comparação", tone: "info" },
-          { label: "Decisão", tone: "safe" },
+          { label: "Comparison", tone: "info" },
+          { label: "Decision", tone: "safe" },
         ],
         kpis: [
-          { label: "Baseline F1", value: "0,62", tone: "warn" },
-          { label: "Balanced F1", value: "0,71", tone: "safe" },
-          { label: "Δ Recall", value: "+0,09", tone: "safe" },
-          { label: "Δ Precision", value: "-0,02", tone: "warn" },
+          { label: "Baseline F1", value: "0.62", tone: "warn" },
+          { label: "Balanced F1", value: "0.71", tone: "safe" },
+          { label: "Δ Recall", value: "+0.09", tone: "safe" },
+          { label: "Δ Precision", value: "-0.02", tone: "warn" },
         ],
         kind: "bar",
         bar: {
@@ -89,10 +89,10 @@ export default function OverviewDashboard() {
       },
       {
         title: "Feature Importance",
-        subtitle: "Quais sinais pesam mais na decisão do modelo",
+        subtitle: "Which signals weigh most in the model's decision",
         tags: [
-          { label: "Explicabilidade", tone: "info" },
-          { label: "Modelo", tone: "info" },
+          { label: "Explainability", tone: "info" },
+          { label: "Model", tone: "info" },
         ],
         kpis: [
           { label: "Top feature", value: "device_change", tone: "info" },
@@ -112,29 +112,29 @@ export default function OverviewDashboard() {
         },
       },
       {
-        title: "Tendência de Alertas",
-        subtitle: "Picos e padrões nas últimas 24h",
+        title: "Alert Trends",
+        subtitle: "Spikes and patterns in the last 24h",
         tags: [
-          { label: "Série", tone: "info" },
-          { label: "Monitoramento", tone: "safe" },
+          { label: "Series", tone: "info" },
+          { label: "Monitoring", tone: "safe" },
         ],
         kpis: [
-          { label: "Alertas (24h)", value: "318", tone: "warn" },
-          { label: "Fraude (24h)", value: "17", tone: "risk" },
-          { label: "Aprovadas", value: "7.104", tone: "safe" },
+          { label: "Alerts (24h)", value: "318", tone: "warn" },
+          { label: "Fraud (24h)", value: "17", tone: "risk" },
+          { label: "Approved", value: "7,104", tone: "safe" },
         ],
         kind: "line",
         line: {
           data: [
             {
-              id: "alertas",
+              id: "alerts",
               data: Array.from({ length: 24 }, (_, i) => ({
                 x: `${i}h`,
                 y: [6, 8, 7, 9, 12, 15, 18, 16, 14, 13, 11, 10, 12, 14, 18, 22, 28, 24, 19, 16, 14, 12, 10, 9][i],
               })),
             },
             {
-              id: "fraude",
+              id: "fraud",
               data: Array.from({ length: 24 }, (_, i) => ({
                 x: `${i}h`,
                 y: [0, 0, 1, 0, 1, 2, 1, 1, 0, 1, 1, 0, 1, 1, 1, 2, 3, 2, 1, 1, 1, 0, 1, 0][i],
@@ -158,22 +158,22 @@ export default function OverviewDashboard() {
           <div className="ov-heroLeft">
             <div className="ov-pill">
               <span className="ov-dot ov-dotSafe" />
-              Dashboard • visão clara do risco
+              Dashboard • clear view of risk
             </div>
 
             <h1 className="ov-h1">
               Dashboard:
-              <span className="ov-h1Accent"> métricas e gráficos</span> para decidir rápido.
+              <span className="ov-h1Accent"> metrics and charts</span> to decide fast.
             </h1>
 
             <p className="ov-lead">
-              Um painel feito para leitura rápida: navy como base (confiança), cores saturadas só para o que exige
-              atenção imediata (fraude/alerta). O preview ao lado é o mesmo estilo do sistema real.
+              A dashboard built for quick reading: navy as base (trust), saturated colors only for what requires
+              immediate attention (fraud/alert). The preview on the side is the same style as the real system.
             </p>
 
             <div className="ov-cta">
-              <Link className="lp-btn lp-btnPrimary" to="/login">Entrar para usar o Dashboard</Link>
-              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">Ver Heimdall (overview)</Link>
+              <Link className="lp-btn lp-btnPrimary" to="/login">Enter to use Dashboard</Link>
+              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Heimdall (overview)</Link>
             </div>
 
             <div className="ov-mini">
@@ -185,8 +185,8 @@ export default function OverviewDashboard() {
           <div className="ov-heroRight">
             <div className="ov-card">
               <div className="ov-cardTop">
-                <div className="ov-cardTitle">Cenários do painel</div>
-                <div className="ov-cardHint">Clique e veja o preview “igual ao sistema”</div>
+                <div className="ov-cardTitle">Dashboard scenarios</div>
+                <div className="ov-cardHint">Click and view the preview “just like the system”</div>
               </div>
 
               <div className="ov-examples">
@@ -209,7 +209,6 @@ export default function OverviewDashboard() {
               </div>
             </div>
 
-            {/* PREVIEW (mini dashboard real) */}
             <div className="od-preview">
               <div className="od-top">
                 <div className="od-dots">
@@ -228,19 +227,18 @@ export default function OverviewDashboard() {
                       <div className="od-kpiLabel">{k.label}</div>
                       <div className={`od-kpiValue tone-${k.tone}`}>{k.value}</div>
                       <div className={`od-kpiChip tone-${k.tone}`}>
-                        {k.tone === "risk" ? "RISCO" : k.tone === "warn" ? "ALERTA" : k.tone === "safe" ? "OK" : "INFO"}
+                        {k.tone === "risk" ? "RISK" : k.tone === "warn" ? "ALERT" : k.tone === "safe" ? "OK" : "INFO"}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Charts */}
                 <div className="od-chartCard">
                   <div className="od-chartHead">
                     <div className="od-chartName">
-                      {active.kind === "line" ? "Tendência" : "Gráfico"}
+                      {active.kind === "line" ? "Trend" : "Chart"}
                     </div>
-                    <div className="od-chartHint">Nivo • mesma paleta do app</div>
+                    <div className="od-chartHint">Nivo • same palette as app</div>
                   </div>
 
                   <div className="od-chart">
@@ -259,7 +257,7 @@ export default function OverviewDashboard() {
                         axisLeft={{ tickSize: 5, tickPadding: 8 }}
                         theme={nivoTheme as any}
                         colors={(bar) => {
-                          // caso TP/FP/FN/TN
+                          // case TP/FP/FN/TN
                           const metric = String((bar.data as any)?.metric ?? "");
                           if (active.bar?.colorsByIndex?.[metric]) return active.bar.colorsByIndex[metric];
                           // baseline/balanced etc
@@ -280,7 +278,7 @@ export default function OverviewDashboard() {
                         enablePoints={false}
                         useMesh={true}
                         theme={nivoTheme as any}
-                        colors={({ id }) => (String(id).includes("fraude") ? toneHex.risk : toneHex.info)}
+                        colors={({ id }) => (String(id).includes("fraud") ? toneHex.risk : toneHex.info)}
                         axisBottom={{ tickRotation: -20, tickSize: 5, tickPadding: 10 }}
                         axisLeft={{ tickSize: 5, tickPadding: 10 }}
                       />

@@ -15,7 +15,7 @@ export default function Navbar() {
           <nav className="lp-links" aria-label="Primary">
             <NavLink to="/overview/heimdall">Heimdall</NavLink>
             <NavLink to="/overview/dashboard">Dashboard</NavLink>
-            <NavLink to="/overview/o-que-fazemos">O que fazemos?</NavLink>
+            <NavLink to="/overview/o-que-fazemos">What we do?</NavLink>
           </nav>
 
           <div className="lp-actions">
