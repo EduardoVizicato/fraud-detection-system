@@ -3,39 +3,34 @@ import "./chat.css";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
+// Removi props desnecessárias como 'open' e 'onClose'
 export default function HeimdallDrawer({
-  open,
-  onClose,
   context,
   apiBase = "http://localhost:8000",
 }: {
-  open: boolean;
-  onClose: () => void;
   context: any;
   apiBase?: string;
 }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: "I am Heimdall. Ask me about the current chart, alerts, or metrics." },
+    { role: "assistant", content: "I am Heimdall. Ask about the transactions." },
   ]);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const quick = useMemo(
     () => [
-      "Explain what this chart is showing",
-      "What is the main anomaly here?",
-      "How to reduce false positives without losing recall?",
-      "What action do you recommend now?",
+      "Analyze fraud risk",
+      "Why is this suspicious?",
+      "Show history",
     ],
     []
   );
 
   useEffect(() => {
-    if (!open) return;
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
-  }, [open, messages]);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   async function send(text: string) {
     const msg = text.trim();
@@ -47,81 +42,77 @@ export default function HeimdallDrawer({
 
     try {
       const res = await fetch(`${apiBase}/api/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg, context }), // ✅ sends context
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ message: msg, context }),
       });
       const data = await res.json();
       setMessages((m) => [...m, { role: "assistant", content: data.reply ?? "No reply." }]);
     } catch {
-      setMessages((m) => [...m, { role: "assistant", content: "Error connecting to API." }]);
+      setMessages((m) => [...m, { role: "assistant", content: "Error connecting to Heimdall API." }]);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <>
-      <div className={`hd-overlay ${open ? "show" : ""}`} onClick={onClose} />
+    <aside className="hd-drawer">
+      {/* Header */}
+      <div className="hd-top">
+        <div>
+          <div className="hd-title">Heimdall AI</div>
+          <div className="hd-sub">
+            {context?.chartTitle ? `Context: ${context.chartTitle}` : "System Active"}
+          </div>
+        </div>
+        <div style={{
+            width: 8, height: 8, background: "#00d9ff", 
+            borderRadius: "50%", boxShadow: "0 0 8px #00d9ff",
+            animation: "pulse 2s infinite"
+        }}></div>
+      </div>
 
-      <aside className={`hd-drawer ${open ? "open" : ""}`} aria-hidden={!open}>
-        <div className="hd-top">
-          <div>
-            <div className="hd-title">Heimdall</div>
-            <div className="hd-sub">
-              {context?.chartTitle ? `Context: ${context.chartTitle}` : "Context: dashboard"}
+      <div className="hd-quick">
+        {quick.map((q) => (
+          <button key={q} className="hd-chip" onClick={() => send(q)} type="button">
+            {q}
+          </button>
+        ))}
+      </div>
+
+      <div className="hd-feed">
+        {messages.map((m, i) => (
+          <div key={i} className={`hd-row ${m.role}`}>
+            <div className={`hd-bubble ${m.role}`}>
+              {m.content}
             </div>
           </div>
+        ))}
 
-          <button className="hd-close" onClick={onClose} aria-label="Close">
-            ✕
-          </button>
-        </div>
-
-        <div className="hd-quick">
-          {quick.map((q) => (
-            <button key={q} className="hd-chip" onClick={() => send(q)} type="button">
-              {q}
-            </button>
-          ))}
-        </div>
-
-        <div className="hd-feed">
-          {messages.map((m, i) => (
-            <div key={i} className={`hd-row ${m.role}`}>
-              <div className={`hd-bubble ${m.role}`}>
-                {m.content}
+        {loading && (
+          <div className="hd-row assistant">
+            <div className="hd-bubble assistant hd-thinking">
+              <div className="hd-dots">
+                <span /><span /><span />
               </div>
             </div>
-          ))}
+          </div>
+        )}
+        <div ref={bottomRef} />
+      </div>
 
-          {loading && (
-            <div className="hd-row assistant">
-              <div className="hd-bubble assistant hd-thinking">
-                <span className="hd-dots" aria-label="Heimdall thinking">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-              </div>
-            </div>
-          )}
-          <div ref={bottomRef} />
-        </div>
-
-        <div className="hd-inputBar">
-          <input
-            className="hd-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && send(input)}
-            placeholder="Ask Heimdall…"
-          />
-          <button className="hd-send" onClick={() => send(input)} disabled={loading || !input.trim()}>
-            {loading ? "..." : "Send"}
-          </button>
-        </div>
-      </aside>
-    </>
+      <div className="hd-inputBar">
+        <input
+          className="hd-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && send(input)}
+          placeholder="Ask Heimdall..."
+        />
+        <button className="hd-send" onClick={() => send(input)} disabled={loading || !input.trim()}>
+          ➜
+        </button>
+      </div>
+    </aside>
   );
 }

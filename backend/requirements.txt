@@ -12,3 +12,4 @@ uvicorn[standard]
 azure-ai-projects 
 azure-identity
 azure-ai-agents
+imbalanced-learn

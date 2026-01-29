@@ -1,9 +1,8 @@
-import { Outlet, NavLink, useNavigate, Link } from "react-router";
-import { getUserName, logOut } from "../auth/validation/auth";
+import { Outlet, useNavigate, Link } from "react-router";
+import { logOut } from "../auth/validation/auth";
 
 export default function AppLayout() {
   const nav = useNavigate();
-  const name = getUserName() || "Usuário";
 
   function onLogout() {
     logOut();

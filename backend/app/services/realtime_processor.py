@@ -156,6 +156,44 @@ class RealtimeProcessor:
         correct = sum(a == p for a, p in zip(actual, pred))
         return correct / len(self.batch_buffer)
     
+    async def stream_individual_transactions(
+        self,
+        interval_ms: int = 100,
+    ):
+        """Stream de transações individuais com todas as features"""
+        with self.csv_path.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            
+            for idx, row in enumerate(reader):
+                try:
+                    time_val = float(row.get("Time", 0) or 0)
+                    amount = float(row.get("Amount", 0) or 0)
+                    actual_class = int(float(row.get("Class", 0) or 0))
+                    
+                    # Extrai V1-V28
+                    features = []
+                    for i in range(1, 29):
+                        try:
+                            features.append(float(row.get(f"V{i}", 0) or 0))
+                        except:
+                            features.append(0.0)
+                    
+                    # Payload para frontend
+                    transaction = {
+                        "id": f"txn_{idx}",
+                        "idx": idx,
+                        "time": time_val,
+                        "amount": amount,
+                        "features": features,  # V1-V28
+                        "class": actual_class,  # Label real (só para validação backend)
+                    }
+                    
+                    yield transaction
+                    await asyncio.sleep(interval_ms / 1000)
+                except Exception as e:
+                    print(f"Erro processando linha {idx}: {e}")
+                    continue
+    
     async def export_full_report(self):
         """Gera relatório completo após processamento"""
         self.fraud_processor.load_data()
