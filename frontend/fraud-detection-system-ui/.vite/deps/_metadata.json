@@ -1,0 +1,64 @@
+{
+  "hash": "83a5d74c",
+  "configHash": "cd1de757",
+  "lockfileHash": "41ccb946",
+  "browserHash": "6b6b8ef1",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "44db1a33",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "007ea2c4",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "7de0dba4",
+      "needsInterop": true
+    },
+    "react-router": {
+      "src": "../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "d4e2de27",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "a1507ad4",
+      "needsInterop": false
+    },
+    "@nivo/bar": {
+      "src": "../../node_modules/@nivo/bar/dist/nivo-bar.mjs",
+      "file": "@nivo_bar.js",
+      "fileHash": "f892dac9",
+      "needsInterop": false
+    },
+    "@nivo/line": {
+      "src": "../../node_modules/@nivo/line/dist/nivo-line.mjs",
+      "file": "@nivo_line.js",
+      "fileHash": "8ca03f47",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-2RNL5CD3": {
+      "file": "chunk-2RNL5CD3.js"
+    },
+    "chunk-WRDWVFHE": {
+      "file": "chunk-WRDWVFHE.js"
+    },
+    "chunk-OAORDXIJ": {
+      "file": "chunk-OAORDXIJ.js"
+    },
+    "chunk-R4VOGKSS": {
+      "file": "chunk-R4VOGKSS.js"
+    }
+  }
+}

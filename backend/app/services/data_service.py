@@ -1,5 +1,10 @@
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+import csv
+import asyncio
+import heapq
+from collections import OrderedDict
+from time import time as now
+import json
 
 import numpy as np
 import pandas as pd
@@ -119,3 +124,76 @@ def npz_preview(rel_path: str, key: str, start: int = 0, stop: int = 200) -> Dic
             "stats": stats,
             "data": sl.tolist(),
         }
+
+
+async def stream_metrics(
+    csv_path: str | None = None,
+    interval_ms: int = 50,
+    window_minutes: int = 60,
+    top_n: int = 5,
+    save_every_ms: int = 1000,
+):
+    path = Path(csv_path) if csv_path else (
+        Path(__file__).resolve().parents[2] / "data" / "raw" / "creditcard.csv"
+    )
+
+    total = 0
+    fraud_total = 0
+    amount_sum = 0.0
+    minute_counts: "OrderedDict[int, int]" = OrderedDict()
+    top_heap: list[tuple[float, dict]] = []
+    last_save = 0.0
+    snapshot_path = Path(__file__).resolve().parents[2] / "data" / "processed" / "realtime_metrics.json"
+
+    with path.open("r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            total += 1
+            amount = float(row.get("Amount", 0) or 0)
+            amount_sum += amount
+            label = int(float(row.get("Class", 0) or 0))
+            t = float(row.get("Time", 0) or 0)
+            minute = int(t // 60)
+
+            if minute not in minute_counts:
+                minute_counts[minute] = 0
+
+            if label == 1:
+                fraud_total += 1
+                minute_counts[minute] += 1
+
+                alert = {"time": t, "amount": amount, "class": label}
+                if len(top_heap) < top_n:
+                    heapq.heappush(top_heap, (amount, alert))
+                else:
+                    if amount > top_heap[0][0]:
+                        heapq.heapreplace(top_heap, (amount, alert))
+
+            while len(minute_counts) > 0:
+                oldest_minute = next(iter(minute_counts))
+                if minute - oldest_minute >= window_minutes:
+                    minute_counts.popitem(last=False)
+                else:
+                    break
+
+            payload = {
+                "type": "metrics",
+                "timestamp": now(),
+                "fraudCountByMinute": [
+                    {"minute": m, "count": c} for m, c in minute_counts.items()
+                ],
+                "avgAmount": amount_sum / total if total else 0,
+                "fraudRate": fraud_total / total if total else 0,
+                "topAlerts": sorted(
+                    [item for _, item in top_heap],
+                    key=lambda x: x["amount"],
+                    reverse=True,
+                ),
+            }
+
+            if (payload["timestamp"] - last_save) * 1000 >= save_every_ms:
+                snapshot_path.write_text(json.dumps(payload, ensure_ascii=False))
+                last_save = payload["timestamp"]
+
+            yield payload
+            await asyncio.sleep(interval_ms / 1000)
