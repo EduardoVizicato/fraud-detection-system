@@ -76,8 +76,8 @@ export default function Dashboard() {
     if (!kpi) return [];
     return [
       { label: "Total", value: kpi.total_cases ?? kpi["total_cases"], tone: "info" as const },
-      { label: "Pred. Fraude", value: kpi.predicted_fraud ?? kpi["predicted_fraud"], tone: "warn" as const },
-      { label: "Fraude real", value: kpi.true_fraud ?? kpi["true_fraud"], tone: "risk" as const },
+      { label: "Pred. Fraud", value: kpi.predicted_fraud ?? kpi["predicted_fraud"], tone: "warn" as const },
+      { label: "Actual Fraud", value: kpi.true_fraud ?? kpi["true_fraud"], tone: "risk" as const },
       { label: "Precision", value: kpi.precision ?? kpi["precision"], tone: "info" as const },
       { label: "Recall", value: kpi.recall ?? kpi["recall"], tone: "safe" as const },
     ];
@@ -141,7 +141,7 @@ export default function Dashboard() {
       base.kpiCards = kpiCards.map((c) => ({...c, value: num(c.value) ?? c.value}));
     } else {
       base.view = "series";
-      base.chart = {id: "series_auto", title: "Serie (auto)"};
+      base.chart = {id: "series_auto", title: "Series (auto)"};
       base.series = lineData ? lineData[0]: null;
     }
 
@@ -155,7 +155,7 @@ export default function Dashboard() {
         <div className="dash-head">
           <div>
             <div className="dash-title">Dashboard</div>
-            <div className="dash-sub">KPIs e gráficos com hierarquia visual forte.</div>
+            <div className="dash-sub">KPIs and charts with strong visual hierarchy.</div>
           </div>
 
           <div className="dash-toolbar">
@@ -193,7 +193,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {loading && <div style={{ marginTop: 12 }} className="p">Carregando…</div>}
+        {loading && <div style={{ marginTop: 12 }} className="p">Loading…</div>}
 
         {isKpiLike && kpi && (
           <>
@@ -204,7 +204,7 @@ export default function Dashboard() {
                     <div className="kpi-label">{c.label}</div>
                     <div className="kpi-value">{fmt(c.value)}</div>
                     <div className={`kpi-chip chip-${c.tone}`}>
-                      {c.tone === "risk" ? "RISCO" : c.tone === "warn" ? "ALERTA" : c.tone === "safe" ? "OK" : "INFO"}
+                      {c.tone === "risk" ? "RISK" : c.tone === "warn" ? "ALERT" : c.tone === "safe" ? "OK" : "INFO"}
                     </div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function Dashboard() {
             <div className="grid grid-2" style={{ marginTop: 14 }}>
               <div className="card">
                 <div className="card-title">Confusion Matrix (TP/FP/FN/TN)</div>
-                <div className="small">Verde = acerto fraude • Vermelho = fraude perdida • Laranja = falso positivo</div>
+                <div className="small">Green = fraud catch • Red = missed fraud • Orange = false positive</div>
                 <div style={{ height: 360, marginTop: 10 }}>
                   <ResponsiveBar
                     data={confusionBar}
@@ -243,7 +243,7 @@ export default function Dashboard() {
 
               <div className="card">
                 <div className="card-title">Preview</div>
-                <div className="small">Amostra do CSV (1 linha)</div>
+                <div className="small">CSV Sample (1 row)</div>
                 <div style={{ overflowX: "auto", marginTop: 10 }}>
                   <table className="table">
                     <thead>
@@ -266,8 +266,8 @@ export default function Dashboard() {
         {/* Série temporal (quando CSV tem muitas linhas) */}
         {!isKpiLike && csv && lineData && (
           <div className="card" style={{ marginTop: 14 }}>
-            <div className="card-title">Série (auto)</div>
-            <div className="small">Detectei a primeira coluna numérica e plotei por índice</div>
+            <div className="card-title">Series (auto)</div>
+            <div className="small">Detected first numeric column and plotted by index</div>
             <div style={{ height: 420, marginTop: 10 }}>
               <ResponsiveLine
                 data={lineData}

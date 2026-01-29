@@ -17,17 +17,17 @@ export default function HeimdallDrawer({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: "Sou o Heimdall. Pergunte sobre o gráfico atual, alertas ou métricas." },
+    { role: "assistant", content: "I am Heimdall. Ask me about the current chart, alerts, or metrics." },
   ]);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const quick = useMemo(
     () => [
-      "Explique o que esse gráfico está mostrando",
-      "Qual é a principal anomalia aqui?",
-      "Como reduzir falsos positivos sem perder recall?",
-      "Que ação você recomenda agora?",
+      "Explain what this chart is showing",
+      "What is the main anomaly here?",
+      "How to reduce false positives without losing recall?",
+      "What action do you recommend now?",
     ],
     []
   );
@@ -49,12 +49,12 @@ export default function HeimdallDrawer({
       const res = await fetch(`${apiBase}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg, context }), // ✅ manda contexto
+        body: JSON.stringify({ message: msg, context }), // ✅ sends context
       });
       const data = await res.json();
-      setMessages((m) => [...m, { role: "assistant", content: data.reply ?? "Sem resposta." }]);
+      setMessages((m) => [...m, { role: "assistant", content: data.reply ?? "No reply." }]);
     } catch {
-      setMessages((m) => [...m, { role: "assistant", content: "Erro ao falar com a API." }]);
+      setMessages((m) => [...m, { role: "assistant", content: "Error connecting to API." }]);
     } finally {
       setLoading(false);
     }
@@ -69,11 +69,11 @@ export default function HeimdallDrawer({
           <div>
             <div className="hd-title">Heimdall</div>
             <div className="hd-sub">
-              {context?.chartTitle ? `Contexto: ${context.chartTitle}` : "Contexto: dashboard"}
+              {context?.chartTitle ? `Context: ${context.chartTitle}` : "Context: dashboard"}
             </div>
           </div>
 
-          <button className="hd-close" onClick={onClose} aria-label="Fechar">
+          <button className="hd-close" onClick={onClose} aria-label="Close">
             ✕
           </button>
         </div>
@@ -98,7 +98,7 @@ export default function HeimdallDrawer({
           {loading && (
             <div className="hd-row assistant">
               <div className="hd-bubble assistant hd-thinking">
-                <span className="hd-dots" aria-label="Heimdall pensando">
+                <span className="hd-dots" aria-label="Heimdall thinking">
                   <span />
                   <span />
                   <span />
@@ -115,10 +115,10 @@ export default function HeimdallDrawer({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send(input)}
-            placeholder="Pergunte ao Heimdall…"
+            placeholder="Ask Heimdall…"
           />
           <button className="hd-send" onClick={() => send(input)} disabled={loading || !input.trim()}>
-            {loading ? "..." : "Enviar"}
+            {loading ? "..." : "Send"}
           </button>
         </div>
       </aside>

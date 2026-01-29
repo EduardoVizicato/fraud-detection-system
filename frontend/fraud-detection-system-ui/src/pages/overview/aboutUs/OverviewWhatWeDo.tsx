@@ -10,30 +10,30 @@ export default function OverviewWhatWeDo() {
           <div className="ow-left">
             <div className="ov-pill">
               <span className="ov-dot ov-dotSafe" />
-              FraudShield • visão, evidência e ação
+              FraudShield • vision, evidence, and action
             </div>
 
             <h1 className="ow-h1">
-              O que fazemos:
-              <span className="ow-accent"> reduzimos fraude</span> sem aumentar ruído.
+              What we do:
+              <span className="ow-accent"> we reduce fraud</span> without increasing noise.
             </h1>
 
             <p className="ow-lead">
-              Unimos análise de dados + métricas + copiloto (Heimdall) para detectar comportamento suspeito,
-              explicar o “porquê” do risco e orientar a próxima ação — com foco em alta legibilidade e decisão rápida.
+              We combine data analysis + metrics + copilot (Heimdall) to detect suspicious behavior,
+              explain the “why” of the risk, and guide the next action — focusing on high readability and quick decision-making.
             </p>
 
             <div className="ow-cta">
-              <Link className="lp-btn lp-btnPrimary" to="/login">Entrar na demo</Link>
-              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">Ver Heimdall</Link>
-              <Link className="lp-btn lp-btnGhost" to="/overview/dashboard">Ver Dashboard</Link>
+              <Link className="lp-btn lp-btnPrimary" to="/signUp">Sign up</Link>
+              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Heimdall</Link>
+              <Link className="lp-btn lp-btnGhost" to="/overview/dashboard">View Dashboard</Link>
             </div>
 
             <div className="ow-metrics">
-              <Metric label="Base" value="Navy" tone="info" sub="confiança/defesa" />
-              <Metric label="Alerta" value="Laranja" tone="warn" sub="triagem" />
-              <Metric label="Risco" value="Vermelho" tone="risk" sub="fraude" />
-              <Metric label="OK" value="Verde" tone="safe" sub="seguro" />
+              <Metric label="Base" value="Navy" tone="info" sub="trust/defense" />
+              <Metric label="Alert" value="Orange" tone="warn" sub="triage" />
+              <Metric label="Risk" value="Red" tone="risk" sub="fraud" />
+              <Metric label="OK" value="Green" tone="safe" sub="safe" />
             </div>
           </div>
 
@@ -41,24 +41,24 @@ export default function OverviewWhatWeDo() {
           <div className="ow-right">
             <div className="ow-panel">
               <div className="ow-panelTop">
-                <div className="ow-panelTitle">Princípios de design</div>
-                <div className="ow-panelHint">Seu briefing, aplicado no produto</div>
+                <div className="ow-panelTitle">Design principles</div>
+                <div className="ow-panelHint">Your briefing, applied to the product</div>
               </div>
 
               <div className="ow-panelBody">
                 <Rule
-                  title="Saturação só quando importa"
-                  desc="Vermelho/laranja aparecem apenas para sinal urgente (fraude/alerta)."
+                  title="Saturation only when it matters"
+                  desc="Red/orange appear only for urgent signals (fraud/alert)."
                   tone="risk"
                 />
                 <Rule
-                  title="Contraste alto para leitura rápida"
-                  desc="KPIs e gráficos com hierarquia visual e espaço em branco."
+                  title="High contrast for quick reading"
+                  desc="KPIs and charts with visual hierarchy and whitespace."
                   tone="info"
                 />
                 <Rule
-                  title="Confiança como base"
-                  desc="Navy como cor principal: sensação de segurança e controle."
+                  title="Trust as a base"
+                  desc="Navy as main color: sense of safety and control."
                   tone="safe"
                 />
               </div>
@@ -72,27 +72,27 @@ export default function OverviewWhatWeDo() {
         {/* WHAT WE DO: cards */}
         <section className="ow-section">
           <div className="ow-head">
-            <h2 className="ow-h2">O que o sistema entrega</h2>
+            <h2 className="ow-h2">What the system delivers</h2>
             <p className="ow-p">
-              Três pilares: detectar, explicar e agir — conectando dados, métricas e investigação.
+              Three pillars: detect, explain, and act — connecting data, metrics, and investigation.
             </p>
           </div>
 
           <div className="ow-grid3">
             <Card
               tone="risk"
-              title="Detecção de fraude"
-              desc="Identifica padrões anômalos e casos com probabilidade elevada de fraude."
+              title="Fraud detection"
+              desc="Identifies anomalous patterns and cases with high fraud probability."
             />
             <Card
               tone="info"
-              title="Métricas e gráficos"
-              desc="KPIs, comparativos e tendências para validar decisões com evidência."
+              title="Metrics and charts"
+              desc="KPIs, comparisons, and trends to validate decisions with evidence."
             />
             <Card
               tone="safe"
-              title="Heimdall (copiloto)"
-              desc="Explica por que um caso subiu para risco e sugere próximos passos de triagem."
+              title="Heimdall (copilot)"
+              desc="Explains why a case rose to risk and suggests next triage steps."
             />
           </div>
         </section>
@@ -100,61 +100,62 @@ export default function OverviewWhatWeDo() {
         {/* HOW IT WORKS: pipeline */}
         <section className="ow-section">
           <div className="ow-head">
-            <h2 className="ow-h2">Como funciona</h2>
+            <h2 className="ow-h2">How it works</h2>
             <p className="ow-p">
-              Fluxo pensado para demo: do dado bruto até uma ação clara (sem “caçar informação”).
+              Flow designed for demo: from raw data to clear action (no “hunting for information”).
             </p>
           </div>
 
           <div className="ow-pipeline">
-            <Step n="01" title="Ingestão & preparo" desc="Dados de transação → limpeza → features." tone="info" />
-            <Step n="02" title="Score & regras" desc="Modelo + heurísticas → risco por transação." tone="warn" />
-            <Step n="03" title="Evidência visual" desc="KPIs + gráficos para validar padrões." tone="info" />
-            <Step n="04" title="Investigação (Heimdall)" desc="Explicação do caso + checklist de ação." tone="safe" />
-            <Step n="05" title="Decisão" desc="Aprovar, revisar ou bloquear, com rastreabilidade." tone="risk" />
+            <Step n="01" title="Ingestion & prep" desc="Transaction data → cleaning → features." tone="info" />
+            <Step n="02" title="Score & rules" desc="Model + heuristics → risk per transaction." tone="warn" />
+            <Step n="03" title="Visual evidence" desc="KPIs + charts to validate patterns." tone="info" />
+            <Step n="04" title="Investigation (Heimdall)" desc="Case explanation + action checklist." tone="safe" />
+            <Step n="05" title="Decision" desc="Approve, review, or block, with traceability." tone="risk" />
           </div>
         </section>
 
         {/* WHY THIS MATTERS */}
         <section className="ow-section ow-split">
           <div className="ow-box">
-            <h3 className="ow-h3">Por que isso importa</h3>
+            <h3 className="ow-h3">Why this matters</h3>
             <p className="ow-p">
-              Fraude é dinâmica. Um bom sistema não só detecta — ele ajuda a entender,
-              reduzir falsos positivos e acelerar investigação.
+              Fraud is dynamic. A good system doesn't just detect — it helps understand,
+              reduce false positives, and accelerate investigation.
             </p>
 
             <ul className="ow-list">
-              <li><span className="ow-bullet info" /> Resposta rápida com evidência</li>
-              <li><span className="ow-bullet warn" /> Triagem priorizada por risco</li>
-              <li><span className="ow-bullet safe" /> Menos ruído (falsos positivos)</li>
-              <li><span className="ow-bullet risk" /> Ação clara para fraude real</li>
+              <li><span className="ow-bullet info" /> Quick response with evidence</li>
+              <li><span className="ow-bullet warn" /> Triage prioritized by risk</li>
+              <li><span className="ow-bullet safe" /> Less noise (false positives)</li>
+              <li><span className="ow-bullet risk" /> Clear action for actual fraud</li>
             </ul>
           </div>
 
           <div className="ow-box">
-            <h3 className="ow-h3">O que você mostra na apresentação</h3>
+            <h3 className="ow-h3">What you show in the presentation</h3>
             <p className="ow-p">
-              Uma narrativa simples e forte:
+              A simple and strong narrative:
             </p>
 
             <div className="ow-narrative">
               <div className="ow-nItem">
-                <div className="ow-nTitle">Problema</div>
-                <div className="ow-nDesc">Fraude cresce e os times perdem tempo com ruído.</div>
+                <div className="ow-nTitle">Problem</div>
+                <div className="ow-nDesc">Fraud grows and teams waste time with noise.</div>
               </div>
               <div className="ow-nItem">
-                <div className="ow-nTitle">Solução</div>
-                <div className="ow-nDesc">Dashboard + Heimdall para explicar e agir.</div>
+                <div className="ow-nTitle">Solution</div>
+                <div className="ow-nDesc">Dashboard + Heimdall to explain and act.</div>
               </div>
               <div className="ow-nItem">
-                <div className="ow-nTitle">Resultado</div>
-                <div className="ow-nDesc">Decisão mais rápida, com evidência e legibilidade.</div>
+                <div className="ow-nTitle">Result</div>
+                <div className="ow-nDesc">Faster decision, with evidence and readability.</div>
               </div>
             </div>
 
             <div className="ow-cta2">
-              <Link className="lp-btn lp-btnPrimary" to="/login">Entrar</Link>
+              <Link className="lp-btn lp-btnGhost" to="/login">Log in</Link>
+              <Link className="lp-btn lp-btnPrimary" to="/signUp">Sign up</Link>
             </div>
           </div>
         </section>

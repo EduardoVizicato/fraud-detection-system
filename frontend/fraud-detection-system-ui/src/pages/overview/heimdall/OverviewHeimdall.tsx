@@ -15,66 +15,66 @@ export default function OverviewHeimdall() {
   const examples: Example[] = useMemo(
     () => [
       {
-        title: "Explique o motivo do alto risco",
-        prompt: "Por que essa transação foi marcada como alto risco?",
+        title: "Explain high risk reason",
+        prompt: "Why was this transaction marked as high risk?",
         tags: [
-          { label: "Investigação", tone: "info" },
-          { label: "Risco", tone: "risk" },
+          { label: "Investigation", tone: "info" },
+          { label: "Risk", tone: "risk" },
         ],
         convo: [
-          { role: "user", content: "Por que essa transação foi marcada como alto risco?" },
+          { role: "user", content: "Why was this transaction marked as high risk?" },
           {
             role: "assistant",
             content:
-              "Sinais principais:\n• IP incomum + mudança recente de device fingerprint\n• Valor acima do padrão do cliente\n• Tentativas repetidas em curto intervalo\n\nSugestão: aplicar verificação adicional (2FA) e revisar histórico de chargebacks.",
+              "Main signals:\n• Unusual IP + recent device fingerprint change\n• Value above customer standard\n• Repeated attempts in short interval\n\nSuggestion: apply additional verification (2FA) and review chargeback history.",
           },
         ],
       },
       {
-        title: "Reduzir falsos positivos",
-        prompt: "Como eu reduzo falsos positivos sem perder recall?",
+        title: "Reduce false positives",
+        prompt: "How do I reduce false positives without losing recall?",
         tags: [
-          { label: "Métricas", tone: "info" },
-          { label: "Ajuste", tone: "warn" },
+          { label: "Metrics", tone: "info" },
+          { label: "Adjustment", tone: "warn" },
         ],
         convo: [
-          { role: "user", content: "Como eu reduzo falsos positivos sem perder recall?" },
+          { role: "user", content: "How do I reduce false positives without losing recall?" },
           {
             role: "assistant",
             content:
-              "Caminho prático:\n1) Ajuste de threshold guiado por Precision–Recall\n2) Regras de exceção para comportamentos recorrentes legítimos\n3) Features de estabilidade (device/IP histórico) para separar comportamento novo vs. habitual\n\nPosso sugerir um threshold inicial e um plano de teste A/B.",
+              "Practical path:\n1) Threshold adjustment guided by Precision–Recall\n2) Exception rules for legitimate recurrent behaviors\n3) Stability features (historical device/IP) to separate new vs. habitual behavior\n\nI can suggest an initial threshold and an A/B test plan.",
           },
         ],
       },
       {
-        title: "Analisar padrão em lote",
-        prompt: "Mostre padrões comuns nos casos de fraude confirmada",
+        title: "Analyze batch patterns",
+        prompt: "Show common patterns in confirmed fraud cases",
         tags: [
           { label: "Insights", tone: "safe" },
-          { label: "Fraude", tone: "risk" },
+          { label: "Fraud", tone: "risk" },
         ],
         convo: [
-          { role: "user", content: "Mostre padrões comuns nos casos de fraude confirmada" },
+          { role: "user", content: "Show common patterns in confirmed fraud cases" },
           {
             role: "assistant",
             content:
-              "Padrões recorrentes (fraude confirmada):\n• Pico de tentativas por minuto\n• Divergência geográfica entre IP e endereço\n• Primeiro uso do cartão em merchant de alto risco\n\nSe quiser, eu retorno os top 10 sinais e como priorizar a triagem.",
+              "Recurring patterns (confirmed fraud):\n• Spike in attempts per minute\n• Geographic divergence between IP and address\n• First card use at high-risk merchant\n\nIf you want, I can return the top 10 signals and how to prioritize triage.",
           },
         ],
       },
       {
-        title: "Checklist de investigação",
-        prompt: "Me dê um checklist rápido para investigar um alerta",
+        title: "Investigation checklist",
+        prompt: "Give me a quick checklist to investigate an alert",
         tags: [
           { label: "Playbook", tone: "info" },
-          { label: "Triagem", tone: "warn" },
+          { label: "Triage", tone: "warn" },
         ],
         convo: [
-          { role: "user", content: "Me dê um checklist rápido para investigar um alerta" },
+          { role: "user", content: "Give me a quick checklist to investigate an alert" },
           {
             role: "assistant",
             content:
-              "Checklist (60–90s):\n• Histórico do cliente (volume, ticket médio)\n• IP/device: novo vs. conhecido\n• Horário/localização: anomalias\n• Repetições e tentativas falhas\n• Coerência de dados (endereço/telefone)\n\nSe 2+ sinais fortes → escalonar verificação.",
+              "Checklist (60–90s):\n• Customer history (volume, average ticket)\n• IP/device: new vs. known\n• Time/location: anomalies\n• Repetitions and failed attempts\n• Data coherence (address/phone)\n\nIf 2+ strong signals → escalate verification.",
           },
         ],
       },
@@ -93,33 +93,33 @@ export default function OverviewHeimdall() {
           <div className="ov-heroLeft">
             <div className="ov-pill">
               <span className="ov-dot ov-dotSafe" />
-              Heimdall • copiloto de investigação
+              Heimdall • investigation copilot
             </div>
 
             <h1 className="ov-h1">
               Heimdall:
-              <span className="ov-h1Accent"> explique e aja</span> com confiança.
+              <span className="ov-h1Accent"> explain and act</span> with confidence.
             </h1>
 
             <p className="ov-lead">
-              O Heimdall transforma sinais e métricas em uma explicação clara: por que um caso subiu para alto risco,
-              quais evidências importam e qual próximo passo reduz fraude sem aumentar falsos positivos.
+              Heimdall transforms signals and metrics into a clear explanation: why a case rose to high risk,
+              what evidence matters, and what next step reduces fraud without increasing false positives.
             </p>
 
             <div className="ov-cta">
               <Link className="lp-btn lp-btnPrimary" to="/login">
-                Entrar para usar o Heimdall
+                Enter to use Heimdall
               </Link>
               <Link className="lp-btn lp-btnGhost" to="/overview/dashboard">
-                Ver Dashboard (overview)
+                View Dashboard (overview)
               </Link>
             </div>
 
             <div className="ov-mini">
-              <span className="ov-chip ov-info" /> Azul = confiança/info
-              <span className="ov-chip ov-warn" /> Laranja = alerta
-              <span className="ov-chip ov-risk" /> Vermelho = risco
-              <span className="ov-chip ov-safe" /> Verde = ok
+              <span className="ov-chip ov-info" /> Blue = confidence/info
+              <span className="ov-chip ov-warn" /> Orange = alert
+              <span className="ov-chip ov-risk" /> Red = risk
+              <span className="ov-chip ov-safe" /> Green = ok
             </div>
           </div>
 
@@ -127,8 +127,8 @@ export default function OverviewHeimdall() {
           <div className="ov-heroRight">
             <div className="ov-card">
               <div className="ov-cardTop">
-                <div className="ov-cardTitle">Experimente exemplos</div>
-                <div className="ov-cardHint">Preview igual ao chat do app</div>
+                <div className="ov-cardTitle">Try examples</div>
+                <div className="ov-cardHint">Preview just like the app chat</div>
               </div>
 
               <div className="ov-examples">
@@ -160,7 +160,7 @@ export default function OverviewHeimdall() {
                   <span />
                   <span />
                 </div>
-                <div className="ov-previewTitle">Heimdall — Conversa (preview)</div>
+                <div className="ov-previewTitle">Heimdall — Conversation (preview)</div>
               </div>
 
               <div className="ov-previewBody">
@@ -178,18 +178,18 @@ export default function OverviewHeimdall() {
         <section className="ov-section">
           <div className="ov-grid3">
             <InfoCard
-              title="Explicações rápidas"
-              desc="Resuma os sinais principais (IP, device, comportamento) e o motivo do score."
+              title="Quick explanations"
+              desc="Summarize main signals (IP, device, behavior) and the score reason."
               tone="info"
             />
             <InfoCard
-              title="Triagem com prioridade"
-              desc="Classifica casos por risco e sugere próximos passos de verificação."
+              title="Prioritized triage"
+              desc="Classifies cases by risk and suggests next verification steps."
               tone="warn"
             />
             <InfoCard
-              title="Menos fraude, menos ruído"
-              desc="Ajuda a reduzir falsos positivos sem derrubar recall, com recomendações práticas."
+              title="Less fraud, less noise"
+              desc="Helps reduce false positives without dropping recall, with practical recommendations."
               tone="safe"
             />
           </div>
