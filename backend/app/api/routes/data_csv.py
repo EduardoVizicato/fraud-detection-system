@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 import os
 import pandas as pd
@@ -50,3 +51,12 @@ def read_csv(
         "limit": limit,
         "rows": page.to_dict(orient="records"),
     }
+
+@router.get("/full-test-metrics")
+def get_full_test_metrics():
+    path = DATA_ROOT / "processed" / "full_test_metrics.json"
+    if not path.exists():
+        return {"error": f"Arquivo não encontrado em {path}"}
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data

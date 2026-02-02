@@ -8,12 +8,12 @@ export default function Navbar() {
                 <span className="lp-logo" aria-hidden />
                 <span className="lp-brandText">
                     <span className="lp-brandName">FraudShield</span>
-                    <span className="lp-brandTag">Heimdall • Fraud Detection</span>
+                    <span className="lp-brandTag">Copilot • Fraud Detection</span>
                 </span>
             </Link>
 
           <nav className="lp-links" aria-label="Primary">
-            <NavLink to="/overview/heimdall">Heimdall</NavLink>
+            <NavLink to="/overview/heimdall">Copilot</NavLink>
             <NavLink to="/overview/dashboard">Dashboard</NavLink>
             <NavLink to="/overview/o-que-fazemos">What we do?</NavLink>
           </nav>

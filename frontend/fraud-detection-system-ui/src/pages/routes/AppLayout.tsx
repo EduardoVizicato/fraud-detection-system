@@ -18,7 +18,7 @@ export default function AppLayout() {
                 <span className="lp-logo" aria-hidden />
                 <span className="lp-brandText">
                     <span className="lp-brandName">FraudShield</span>
-                    <span className="lp-brandTag">Heimdall • Fraud Detection</span>
+                    <span className="lp-brandTag">AI • Fraud Detection</span>
                 </span>
             </Link>
 

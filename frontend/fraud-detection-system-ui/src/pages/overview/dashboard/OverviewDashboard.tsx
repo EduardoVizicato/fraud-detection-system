@@ -173,7 +173,7 @@ export default function OverviewDashboard() {
 
             <div className="ov-cta">
               <Link className="lp-btn lp-btnPrimary" to="/login">Enter to use Dashboard</Link>
-              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Heimdall (overview)</Link>
+              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Copilot (overview)</Link>
             </div>
 
             <div className="ov-mini">

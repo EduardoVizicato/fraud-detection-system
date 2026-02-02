@@ -93,22 +93,22 @@ export default function OverviewHeimdall() {
           <div className="ov-heroLeft">
             <div className="ov-pill">
               <span className="ov-dot ov-dotSafe" />
-              Heimdall • investigation copilot
+              AI • investigation copilot
             </div>
 
             <h1 className="ov-h1">
-              Heimdall:
+              Copilot:
               <span className="ov-h1Accent"> explain and act</span> with confidence.
             </h1>
 
             <p className="ov-lead">
-              Heimdall transforms signals and metrics into a clear explanation: why a case rose to high risk,
+              Copilot AI transforms signals and metrics into a clear explanation: why a case rose to high risk,
               what evidence matters, and what next step reduces fraud without increasing false positives.
             </p>
 
             <div className="ov-cta">
               <Link className="lp-btn lp-btnPrimary" to="/login">
-                Enter to use Heimdall
+                Enter to use our Copilot
               </Link>
               <Link className="lp-btn lp-btnGhost" to="/overview/dashboard">
                 View Dashboard (overview)
@@ -160,7 +160,7 @@ export default function OverviewHeimdall() {
                   <span />
                   <span />
                 </div>
-                <div className="ov-previewTitle">Heimdall — Conversation (preview)</div>
+                <div className="ov-previewTitle">Copilot — Conversation (preview)</div>
               </div>
 
               <div className="ov-previewBody">

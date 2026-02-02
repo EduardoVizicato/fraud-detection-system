@@ -19,13 +19,13 @@ export default function OverviewWhatWeDo() {
             </h1>
 
             <p className="ow-lead">
-              We combine data analysis + metrics + copilot (Heimdall) to detect suspicious behavior,
+              We combine data analysis + metrics + copilot to detect suspicious behavior,
               explain the “why” of the risk, and guide the next action — focusing on high readability and quick decision-making.
             </p>
 
             <div className="ow-cta">
               <Link className="lp-btn lp-btnPrimary" to="/signUp">Sign up</Link>
-              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Heimdall</Link>
+              <Link className="lp-btn lp-btnGhost" to="/overview/heimdall">View Copilot</Link>
               <Link className="lp-btn lp-btnGhost" to="/overview/dashboard">View Dashboard</Link>
             </div>
 
@@ -91,7 +91,7 @@ export default function OverviewWhatWeDo() {
             />
             <Card
               tone="safe"
-              title="Heimdall (copilot)"
+              title="Copilot"
               desc="Explains why a case rose to risk and suggests next triage steps."
             />
           </div>
@@ -110,7 +110,7 @@ export default function OverviewWhatWeDo() {
             <Step n="01" title="Ingestion & prep" desc="Transaction data → cleaning → features." tone="info" />
             <Step n="02" title="Score & rules" desc="Model + heuristics → risk per transaction." tone="warn" />
             <Step n="03" title="Visual evidence" desc="KPIs + charts to validate patterns." tone="info" />
-            <Step n="04" title="Investigation (Heimdall)" desc="Case explanation + action checklist." tone="safe" />
+            <Step n="04" title="Investigation (Copilot)" desc="Case explanation + action checklist." tone="safe" />
             <Step n="05" title="Decision" desc="Approve, review, or block, with traceability." tone="risk" />
           </div>
         </section>
@@ -145,7 +145,7 @@ export default function OverviewWhatWeDo() {
               </div>
               <div className="ow-nItem">
                 <div className="ow-nTitle">Solution</div>
-                <div className="ow-nDesc">Dashboard + Heimdall to explain and act.</div>
+                <div className="ow-nDesc">Dashboard + Copilot to explain and act.</div>
               </div>
               <div className="ow-nItem">
                 <div className="ow-nTitle">Result</div>

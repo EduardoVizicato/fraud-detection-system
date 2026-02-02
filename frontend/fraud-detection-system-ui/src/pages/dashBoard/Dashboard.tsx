@@ -1,288 +1,265 @@
 import { useEffect, useMemo, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { ResponsiveLine } from "@nivo/line";
 import Chat from "../chatBot/Chat";
+import "./Dashboard.css";
 
 const API_BASE = "http://localhost:8000";
 
-type CsvResponse = {
-  file: string;
-  columns: string[];
-  rows: Record<string, any>[];
+// --- Utilitários de Formatação e Lógica ---
+const num = (v: any) => {
+  const n = Number(String(v).replace(",", "."));
+  return Number.isNaN(n) ? 0 : n;
 };
 
-function num(v: any) {
-  const n = Number(String(v).replace(",", "."));
-  return Number.isNaN(n) ? null : n;
-}
-
-function fmt(n: any) {
+const fmt = (n: any) => {
   const x = Number(n);
   if (Number.isNaN(x)) return String(n ?? "");
-  return new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 4 }).format(x);
-}
+  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 3 }).format(x);
+};
 
 const nivoTheme = {
-  text: { fill: "rgba(11,18,32,.82)" },
+  text: { fill: "#4a5568" },
   axis: {
-    ticks: { text: { fill: "rgba(11,18,32,.70)", fontSize: 12 } },
-    legend: { text: { fill: "rgba(11,18,32,.70)", fontSize: 12 } },
+    ticks: { text: { fontSize: 11 } },
+    legend: { text: { fontSize: 12, fontWeight: 700 } },
   },
-  grid: { line: { stroke: "rgba(11,18,32,.08)", strokeWidth: 1 } },
-  tooltip: { container: { fontSize: 12 } },
+  grid: { line: { stroke: "#edf2f7", strokeWidth: 1 } },
 };
 
 export default function Dashboard() {
   const [files, setFiles] = useState<string[]>([]);
   const [selected, setSelected] = useState<string>("processed/audit_kpis.csv");
-  const [csv, setCsv] = useState<CsvResponse | null>(null);
+  const [csv, setCsv] = useState<{ file: string; columns: string[]; rows: any[] } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Carregar lista de arquivos
   useEffect(() => {
     (async () => {
       const res = await fetch(`${API_BASE}/api/data/csv-files?subdir=processed`);
       const json = await res.json();
       setFiles(json.files || []);
-      // se existir audit_kpis, preferir
-      if (json.files?.includes("processed/audit_kpis.csv")) setSelected("processed/audit_kpis.csv");
-      else if (json.files?.length) setSelected(json.files[0]);
     })();
   }, []);
 
+  // Carregar dados do arquivo selecionado
   useEffect(() => {
     if (!selected) return;
-
     (async () => {
       setLoading(true);
       try {
         const params = new URLSearchParams({ rel_path: selected, limit: "2000" });
         const res = await fetch(`${API_BASE}/api/data/csv?${params.toString()}`);
-        const json: CsvResponse = await res.json();
+        const json = await res.json();
         setCsv(json);
-      } finally {
-        setLoading(false);
-      }
+      } finally { setLoading(false); }
     })();
   }, [selected]);
 
-  const isKpiLike = useMemo(() => (csv?.rows?.length ?? 0) === 1, [csv]);
+  // --- Lógica de Explicabilidade (IA Context) ---
+  // Mapeamos os pesos das features para que a IA saiba "o porquê"
+  const featureInsights = {
+    V4: "Major Fraud Driver (Positive Correlation)",
+    V14: "Strong Legitimacy Indicator (Negative Correlation)",
+    V10: "Strong Legitimacy Indicator (Negative Correlation)",
+    V12: "Safety Feature",
+    V11: "Fraud Accelerator",
+  };
 
-  const kpi = useMemo(() => {
-    if (!csv || !isKpiLike) return null;
-    return csv.rows[0];
-  }, [csv, isKpiLike]);
-
-  const kpiCards = useMemo(() => {
-    if (!kpi) return [];
-    return [
-      { label: "Total", value: kpi.total_cases ?? kpi["total_cases"], tone: "info" as const },
-      { label: "Pred. Fraud", value: kpi.predicted_fraud ?? kpi["predicted_fraud"], tone: "warn" as const },
-      { label: "Actual Fraud", value: kpi.true_fraud ?? kpi["true_fraud"], tone: "risk" as const },
-      { label: "Precision", value: kpi.precision ?? kpi["precision"], tone: "info" as const },
-      { label: "Recall", value: kpi.recall ?? kpi["recall"], tone: "safe" as const },
-    ];
-  }, [kpi]);
-
-  const confusionBar = useMemo(() => {
-    if (!kpi) return [];
-    const tp = num(kpi.tp); const fp = num(kpi.fp); const fn = num(kpi.fn); const tn = num(kpi.tn);
-    return [
-      { metric: "TP", value: tp ?? 0, colorKey: "safe" },
-      { metric: "FP", value: fp ?? 0, colorKey: "warn" },
-      { metric: "FN", value: fn ?? 0, colorKey: "risk" },
-      { metric: "TN", value: tn ?? 0, colorKey: "info" },
-    ];
-  }, [kpi]);
-
-  const lineData = useMemo(() => {
-    if (!csv || isKpiLike || csv.rows.length < 2) return null;
-    const cols = csv.columns;
-
-    let yKey: string | null = null;
-    for (const c of cols) {
-      const v = csv.rows[0]?.[c];
-      if (num(v) !== null) { yKey = c; break; }
-    }
-    if (!yKey) return null;
-
-    return [{
-      id: yKey,
-      data: csv.rows.map((r, i) => ({ x: i + 1, y: num(r[yKey]) ?? 0 })),
-    }];
-  }, [csv, isKpiLike]);
-
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const context = useMemo(() => {
-    const base: any ={
-      page: "dashboard",
-      selectedFile: selected,
-      csvColumns: csv?.columns ?? [],
-      rowsPreview: (csv?.rows ?? []).slice(0,5),
+  const chatContext = useMemo(() => {
+    if (!csv) return {};
+    return {
+      current_file: selected,
+      data_preview: csv.rows.slice(0, 5),
+      insights: featureInsights,
+      model_logic: "Weights > 0 pull towards Class 1 (Fraud). Weights < 0 pull towards Class 0 (Legit)."
     };
+  }, [csv, selected]);
 
-    if(isKpiLike && kpi){
-      base.view = "kpi_overview";
-      base.chart = { id: "confusion_matrix", title: "Confusion Matrix (TP/FP/FN/TN)"};
+  // --- VIEW 1: AUDIT KPIs (Comparação de Modelos) ---
+  const renderAuditKpis = () => {
+    if (!csv || csv.rows.length < 1) return null;
+    const m1 = csv.rows[0]; // Baseline
+    const m2 = csv.rows[1] || m1; // New Version
+    
+    const metrics = [
+      { k: "precision", l: "Precision", t: "info" },
+      { k: "recall", l: "Recall", t: "safe" },
+      { k: "predicted_fraud", l: "Pred. Fraud", t: "warn" },
+      { k: "true_fraud", l: "Actual Fraud", t: "risk" },
+    ];
 
-      base.kpis = {
-        total_cases: num(kpi.tota_cases ?? kpi["total_cases"]),
-        predicted_fraud: num(kpi.predicted_fraud ?? kpi["predicted_fraud"]),
-        true_fraud: num(kpi.true_fraud ?? kpi["true_fraud"]),
-        tp: num(kpi.tp),
-        fp: num(kpi.fp),
-        fn: num(kpi.fn),
-        tn: num(kpi.tn),
-        precision: num(kpi.precision),
-        recall: num(kpi.recall),
-      };
+    const confusionData = ["tp", "fp", "fn", "tn"].map(k => ({
+      metric: k.toUpperCase(),
+      "Baseline": num(m1[k]),
+      "Current Model": num(m2[k]),
+    }));
 
-      base.confusionBar = confusionBar;
-      base.kpiCards = kpiCards.map((c) => ({...c, value: num(c.value) ?? c.value}));
-    } else {
-      base.view = "series";
-      base.chart = {id: "series_auto", title: "Series (auto)"};
-      base.series = lineData ? lineData[0]: null;
-    }
-
-    return base
-
-  }, [selected, csv, isKpiLike, kpi, confusionBar, kpiCards, lineData]);
-
-  return (
-    <div>
-      <div className="container section">
-        <div className="dash-head">
-          <div>
-            <div className="dash-title">Dashboard</div>
-            <div className="dash-sub">KPIs and charts with strong visual hierarchy.</div>
-          </div>
-
-          <div className="dash-toolbar">
-            <div className="dash-field">
-              <div className="dash-label">CSV</div>
-              <select className="dash-select" value={selected} onChange={(e) => setSelected(e.target.value)}>
-                {files.map((f) => <option key={f} value={f}>{f}</option>)}
-              </select>
-            </div>
-
-            <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <button
-                  onClick={() => setDrawerOpen((v) => !v)}
-                  style={{
-                    padding: "10px 12px",
-                    borderRadius: 14,
-                    border: "1px solid rgba(0,116,217,.55)",
-                    background: "linear-gradient(135deg, #0074d9, rgba(0,116,217,.75))",
-                    color: "white",
-                    fontWeight: 900,
-                    cursor: "pointer",
-                  }}
-                >
-                  Heimdall
-                </button>
+    return (
+      <>
+        <div className="grid grid-4" style={{ marginTop: 20 }}>
+          {metrics.map(m => (
+            <div className="card kpi-card-enhanced" key={m.k}>
+              <div className="kpi-label">{m.l}</div>
+              <div className="kpi-main-row">
+                <span className="kpi-value">{fmt(m2[m.k])}</span>
+                {csv.rows.length > 1 && (
+                  <span className={`kpi-diff ${num(m2[m.k]) - num(m1[m.k]) >= 0 ? 'pos' : 'neg'}`}>
+                    {(num(m2[m.k]) - num(m1[m.k]) > 0 ? "+" : "") + fmt(num(m2[m.k]) - num(m1[m.k]))}
+                  </span>
+                )}
               </div>
-
-              <Chat
-                open={drawerOpen}
-                onClose={() => setDrawerOpen(false)}
-                context={context}
-              />
+              <div className={`kpi-bar-indicator bg-${m.t}`} />
             </div>
+          ))}
+        </div>
+        <div className="card" style={{ marginTop: 20 }}>
+          <div className="card-title">Confusion Matrix Comparison</div>
+          <div style={{ height: 350 }}>
+            <ResponsiveBar
+              data={confusionData}
+              keys={["Baseline", "Current Model"]}
+              indexBy="metric"
+              groupMode="grouped"
+              margin={{ top: 50, right: 30, bottom: 50, left: 60 }}
+              colors={["#cbd5e0", "#0074d9"]}
+              theme={nivoTheme}
+              borderRadius={4}
+              legends={[{ dataFrom: 'keys', anchor: 'top-right', direction: 'row', translateY: -40, itemWidth: 120, itemHeight: 20 }]}
+            />
           </div>
         </div>
+      </>
+    );
+  };
 
-        {loading && <div style={{ marginTop: 12 }} className="p">Loading…</div>}
+  // --- VIEW 2: FEATURE IMPORTANCE (Corrigida) ---
+  const renderFeatureImportance = () => {
+    const data = (csv?.rows || []).slice(0, 15).map(r => ({
+      id: r.feature,
+      value: num(r.weight), //
+      color: num(r.weight) > 0 ? "#ff4136" : "#0074d9"
+    })).sort((a,b) => Math.abs(b.value) - Math.abs(a.value));
 
-        {isKpiLike && kpi && (
-          <>
-            <div className="grid grid-4" style={{ marginTop: 14 }}>
-              {kpiCards.map((c) => (
-                <div className="card" key={c.label}>
-                  <div className="kpi">
-                    <div className="kpi-label">{c.label}</div>
-                    <div className="kpi-value">{fmt(c.value)}</div>
-                    <div className={`kpi-chip chip-${c.tone}`}>
-                      {c.tone === "risk" ? "RISK" : c.tone === "warn" ? "ALERT" : c.tone === "safe" ? "OK" : "INFO"}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="grid grid-2" style={{ marginTop: 14 }}>
-              <div className="card">
-                <div className="card-title">Confusion Matrix (TP/FP/FN/TN)</div>
-                <div className="small">Green = fraud catch • Red = missed fraud • Orange = false positive</div>
-                <div style={{ height: 360, marginTop: 10 }}>
-                  <ResponsiveBar
-                    data={confusionBar}
-                    keys={["value"]}
-                    indexBy="metric"
-                    margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
-                    padding={0.35}
-                    valueScale={{ type: "linear" }}
-                    indexScale={{ type: "band", round: true }}
-                    colors={({ data }) => {
-                      const k = (data as any).colorKey;
-                      if (k === "risk") return "#ff4136";
-                      if (k === "warn") return "#ff851b";
-                      if (k === "safe") return "#2ecc40";
-                      return "#0074d9";
-                    }}
-                    borderRadius={10}
-                    axisBottom={{ tickSize: 5, tickPadding: 8 }}
-                    axisLeft={{ tickSize: 5, tickPadding: 8 }}
-                    theme={nivoTheme as any}
-                    enableLabel={false}
-                    gridYValues={5}
-                  />
-                </div>
-              </div>
-
-              <div className="card">
-                <div className="card-title">Preview</div>
-                <div className="small">CSV Sample (1 row)</div>
-                <div style={{ overflowX: "auto", marginTop: 10 }}>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        {csv?.columns?.slice(0, 10).map((c) => <th key={c}>{c}</th>)}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {csv?.columns?.slice(0, 10).map((c) => <td key={c}>{String(kpi[c] ?? "")}</td>)}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Série temporal (quando CSV tem muitas linhas) */}
-        {!isKpiLike && csv && lineData && (
-          <div className="card" style={{ marginTop: 14 }}>
-            <div className="card-title">Series (auto)</div>
-            <div className="small">Detected first numeric column and plotted by index</div>
-            <div style={{ height: 420, marginTop: 10 }}>
-              <ResponsiveLine
-                data={lineData}
-                margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
-                xScale={{ type: "point" }}
-                yScale={{ type: "linear", stacked: false, min: "auto", max: "auto" }}
-                curve="monotoneX"
-                enablePoints={false}
-                useMesh={true}
-                theme={nivoTheme as any}
-              />
-            </div>
-          </div>
-        )}
+    return (
+      <div className="card full-width" style={{ marginTop: 20 }}>
+        <div className="card-title">Model Decision Drivers (LogReg Weights)</div>
+        <div className="small" style={{ marginBottom: 15 }}>
+          Red bars increase fraud probability. Blue bars indicate legitimacy drivers.
+        </div>
+        <div style={{ height: 550 }}>
+          <ResponsiveBar
+            data={data}
+            keys={["value"]}
+            indexBy="id"
+            layout="horizontal"
+            margin={{ top: 20, right: 60, bottom: 50, left: 140 }}
+            colors={({ data }) => (data as any).color}
+            theme={nivoTheme}
+            enableLabel={true}
+            label={d => `${fmt(d.value)}`}
+            labelTextColor="white"
+            padding={0.3}
+            borderRadius={4}
+          />
+        </div>
       </div>
+    );
+  };
+
+  // --- VIEW 3: TOP ALERTS (Com Explicabilidade) ---
+  const renderTopAlerts = () => (
+    <div className="card full-width" style={{ marginTop: 20 }}>
+      <div className="card-title">High-Confidence Fraud Alerts</div>
+      <div className="table-container">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Test Index</th>
+              <th>Fraud Probability</th>
+              <th>Actual Class</th>
+              <th>Outcome</th>
+              <th>Primary Driver</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(csv?.rows || []).slice(0, 15).map((r, i) => (
+              <tr key={i}>
+                <td>#{r.test_index}</td>
+                <td>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                     <div className="progress-bg"><div className="progress-fill" style={{ width: `${num(r.fraud_probability)*100}%` }} /></div>
+                     <strong>{(num(r.fraud_probability) * 100).toFixed(2)}%</strong>
+                   </div>
+                </td>
+                <td>{r.y_true === "1" ? "FRAUD" : "NORMAL"}</td>
+                <td><span className={`kpi-diff ${r.outcome === 'TP' ? 'pos' : 'neg'}`}>{r.outcome}</span></td>
+                <td><span className="small-info">{r.y_true === "1" ? "High V4/V11 Values" : "Normal Pattern"}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  // --- VIEW 4: METRICS & COMPARISON (Balanced vs Baseline) ---
+  const renderMetrics = () => (
+    <div className="grid grid-2" style={{ marginTop: 20 }}>
+      {csv?.rows.map((r, i) => (
+        <div className="card" key={i}>
+          <div className="kpi-label">{r.model ? `Model: ${r.model}` : `Class: ${r.class === "1" ? "Fraud" : "Normal"}`}</div>
+          <div className="kpi-value">F1: {fmt(r.f1_score || r.fraud_f1_score)}</div>
+          <div className="grid grid-2" style={{ marginTop: 10 }}>
+             <div className="small">Precision: {fmt(r.precision || r.fraud_precision)}</div>
+             <div className="small">Recall: {fmt(r.recall || r.fraud_recall)}</div>
+          </div>
+          <div className={`kpi-bar-indicator bg-info`} style={{ width: `${num(r.recall || r.fraud_recall)*100}%` }} />
+        </div>
+      ))}
+    </div>
+  );
+
+  // --- Seletor de Renderização ---
+  const renderMainView = () => {
+    if (!csv) return null;
+    const file = selected.toLowerCase();
+    if (file.includes("audit_kpis")) return renderAuditKpis();
+    if (file.includes("feature_importance")) return renderFeatureImportance();
+    if (file.includes("top_alerts")) return renderTopAlerts();
+    if (file.includes("metrics") || file.includes("comparison") || file.includes("summary")) return renderMetrics();
+    
+    return (
+      <div className="card" style={{ marginTop: 20 }}>
+        <div className="card-title">Raw Data Preview</div>
+        <div className="table-container">
+          <table className="table">
+            <thead><tr>{csv.columns.map(c => <th key={c}>{c}</th>)}</tr></thead>
+            <tbody>{csv.rows.slice(0,10).map((r, i) => <tr key={i}>{csv.columns.map(c => <td key={c}>{r[c]}</td>)}</tr>)}</tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="container section">
+      <div className="dash-head">
+        <div>
+          <div className="dash-title">Heimdall Audit Center</div>
+          <div className="dash-sub">Advanced fraud model explainability and audit logs.</div>
+        </div>
+        <div className="dash-toolbar">
+          <select className="dash-select" value={selected} onChange={(e) => setSelected(e.target.value)}>
+            {files.map(f => <option key={f} value={f}>{f.split('/').pop()}</option>)}
+          </select>
+          <button className="btn-heimdall" onClick={() => setDrawerOpen(true)}>AI Insights</button>
+        </div>
+      </div>
+      
+      {loading ? <div className="loading-state">Synchronizing Data...</div> : renderMainView()}
+
+      <Chat open={drawerOpen} onClose={() => setDrawerOpen(false)} context={chatContext} />
     </div>
   );
 }

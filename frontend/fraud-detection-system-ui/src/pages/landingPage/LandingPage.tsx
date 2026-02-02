@@ -19,7 +19,7 @@ export default function Landing() {
               </h1>
 
               <p className="lp-subtitle">
-                A command center for metrics and charts + an AI copilot (Heimdall) to investigate anomalies,
+                A command center for metrics and charts + an AI copilot to investigate anomalies,
                 eliminate false positives, and turn complex data into decisive action.
               </p>
 
@@ -103,7 +103,7 @@ export default function Landing() {
 
                   <div className="lp-chatPreview">
                     <div className="lp-chatTop">
-                      <div className="lp-chatTitle">Heimdall</div>
+                      <div className="lp-chatTitle">Copilot</div>
                       <div className="lp-chatChip">Investigation</div>
                     </div>
                     <div className="lp-bubble lp-bubbleUser">
@@ -148,7 +148,7 @@ export default function Landing() {
               <FeatureCard
                 tone="safe"
                 title="Evidence & Explanation"
-                desc="Heimdall summarizes key signals and prescribes the next investigation steps."
+                desc="Copilot summarizes key signals and prescribes the next investigation steps."
               />
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function Landing() {
 
             <div className="lp-steps">
               <Step n="01" title="Monitor" desc="Dashboard highlights KPIs, trends, and alerts with high contrast." />
-              <Step n="02" title="Investigate" desc="Ask Heimdall for root-cause analysis and investigation paths." />
+              <Step n="02" title="Investigate" desc="Ask Copilot for root-cause analysis and investigation paths." />
               <Step n="03" title="Validate" desc="Compare metrics and review specific signals using quick filters." />
               <Step n="04" title="Resolve" desc="Tag, report, and feed the decision back into the model." />
             </div>
@@ -272,7 +272,7 @@ export default function Landing() {
 
         <footer className="lp-footer">
           <div className="lp-container lp-footerInner">
-            <span>© {new Date().getFullYear()} FraudShield • Heimdall AI</span>
+            <span>© {new Date().getFullYear()} FraudShield • Copilot AI</span>
             <span className="lp-footerRight">Enterprise Edition • FraudShield Technologies</span>
           </div>
         </footer>

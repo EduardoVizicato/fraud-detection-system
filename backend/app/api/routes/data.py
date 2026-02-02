@@ -1,5 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import FileResponse
+from pathlib import Path
+
+import json
 
 from app.services.data_service import (
     list_tree, read_csv, npz_keys, npz_preview, safe_resolve

@@ -17,7 +17,7 @@ export default function HeimdallDrawer({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: "I am Heimdall. Ask me about the current chart, alerts, or metrics." },
+    { role: "assistant", content: "I am Copilot. Ask me about the current chart, alerts, or metrics." },
   ]);
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -67,7 +67,7 @@ export default function HeimdallDrawer({
       <aside className={`hd-drawer ${open ? "open" : ""}`} aria-hidden={!open}>
         <div className="hd-top">
           <div>
-            <div className="hd-title">Heimdall</div>
+            <div className="hd-title">Copilot</div>
             <div className="hd-sub">
               {context?.chartTitle ? `Context: ${context.chartTitle}` : "Context: dashboard"}
             </div>
@@ -98,7 +98,7 @@ export default function HeimdallDrawer({
           {loading && (
             <div className="hd-row assistant">
               <div className="hd-bubble assistant hd-thinking">
-                <span className="hd-dots" aria-label="Heimdall thinking">
+                <span className="hd-dots" aria-label="Copilot thinking">
                   <span />
                   <span />
                   <span />
@@ -115,7 +115,7 @@ export default function HeimdallDrawer({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send(input)}
-            placeholder="Ask Heimdall…"
+            placeholder="Ask Copilot"
           />
           <button className="hd-send" onClick={() => send(input)} disabled={loading || !input.trim()}>
             {loading ? "..." : "Send"}
