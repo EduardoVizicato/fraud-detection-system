@@ -133,23 +133,23 @@ export default function OverviewWhatWeDo() {
           </div>
 
           <div className="ow-box">
-            <h3 className="ow-h3">What you show in the presentation</h3>
+            <h3 className="ow-h3">The FraudShield Impact</h3>
             <p className="ow-p">
-              A simple and strong narrative:
+              Transforming complex security signals into business intelligence and rapid response.
             </p>
 
             <div className="ow-narrative">
               <div className="ow-nItem">
-                <div className="ow-nTitle">Problem</div>
-                <div className="ow-nDesc">Fraud grows and teams waste time with noise.</div>
+                <div className="ow-nTitle">Reduced Overhead</div>
+                <div className="ow-nDesc">Eliminate manual data hunting and focus analyst energy on high-priority threats.</div>
               </div>
               <div className="ow-nItem">
-                <div className="ow-nTitle">Solution</div>
-                <div className="ow-nDesc">Dashboard + Heimdall to explain and act.</div>
+                <div className="ow-nTitle">Contextual Clarity</div>
+                <div className="ow-nDesc">Move beyond "yes/no" flags with AI-driven insights that explain the root cause of risk.</div>
               </div>
               <div className="ow-nItem">
-                <div className="ow-nTitle">Result</div>
-                <div className="ow-nDesc">Faster decision, with evidence and readability.</div>
+                <div className="ow-nTitle">Accelerated Response</div>
+                <div className="ow-nDesc">Drastically shorten the time between detection and decision with streamlined workflows.</div>
               </div>
             </div>
 
